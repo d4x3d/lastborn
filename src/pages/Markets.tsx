@@ -2,12 +2,21 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 
+type CoinSymbol = 'btc' | 'eth' | 'bnb' | 'sol';
+
 const mockMarketData = [
   { id: 'btc', name: 'Bitcoin', symbol: 'BTC', price: 35000, change24h: 2.5, volume24h: 28000000000 },
   { id: 'eth', name: 'Ethereum', symbol: 'ETH', price: 2000, change24h: -1.2, volume24h: 15000000000 },
   { id: 'bnb', name: 'Binance Coin', symbol: 'BNB', price: 240, change24h: 0.8, volume24h: 1200000000 },
   { id: 'sol', name: 'Solana', symbol: 'SOL', price: 45, change24h: 5.2, volume24h: 2500000000 },
 ];
+
+const coinImageMap: { [key in CoinSymbol]: string } = {
+  'btc': '/images/bitcoin-btc-logo.svg',
+  'eth': '/images/ethereum-eth-logo.svg',
+  'bnb': '/images/bnb-bnb-logo.svg',
+  'sol': '/images/solana-sol-logo.svg',
+};
 
 export default function Markets() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -66,6 +75,11 @@ export default function Markets() {
                       <tr key={market.id} className="hover:bg-purple/5 dark:hover:bg-purple/10 transition-colors duration-200">
                         <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm sm:pl-6">
                           <div className="flex items-center">
+                            <img 
+                              src={coinImageMap[market.symbol.toLowerCase() as CoinSymbol]} 
+                              alt={market.name} 
+                              className="h-8 w-8 rounded-full mr-4"
+                            />
                             <div className="ml-4">
                               <div className="font-medium text-gray-900 dark:text-white">{market.name}</div>
                               <div className="text-teal">{market.symbol}</div>

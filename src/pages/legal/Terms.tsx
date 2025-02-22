@@ -13,12 +13,12 @@ export default function Terms() {
 
           <h2 className="text-2xl font-semibold mt-8 mb-4">1. Introduction</h2>
           <p className="text-gray-600 dark:text-gray-300">
-            Welcome to CryptoTrade. By accessing or using our platform, you agree to be bound by these terms of service.
+            Welcome to JayeCane. By accessing or using our platform, you agree to be bound by these terms of service.
           </p>
 
           <h2 className="text-2xl font-semibold mt-8 mb-4">2. Definitions</h2>
           <p className="text-gray-600 dark:text-gray-300">
-            "Platform" refers to CryptoTrade's website, mobile applications, and services.
+            "Platform" refers to JayeCane's website, mobile applications, and services.
             "User" refers to any individual or entity using our Platform.
           </p>
 
@@ -31,7 +31,7 @@ export default function Terms() {
           <h2 className="text-2xl font-semibold mt-8 mb-4">4. Trading Rules</h2>
           <p className="text-gray-600 dark:text-gray-300">
             Users must comply with all applicable laws and regulations when trading.
-            CryptoTrade reserves the right to suspend or terminate accounts that violate our trading rules.
+            JayeCane reserves the right to suspend or terminate accounts that violate our trading rules.
           </p>
 
           <h2 className="text-2xl font-semibold mt-8 mb-4">5. Privacy</h2>
@@ -46,7 +46,7 @@ export default function Terms() {
           <p className="text-gray-600 dark:text-gray-300 mb-8">
             For questions about these terms, please contact us at{' '}
             <Link to="/contact" className="text-teal-600 dark:text-teal-400 hover:underline">
-              support@cryptotrade.com
+              support@JayeCane.com
             </Link>
           </p>
         </div>
