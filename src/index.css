@@ -1,0 +1,122 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+ 
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 270 60% 20%;
+    --card: 0 0% 100%;
+    --card-foreground: 270 60% 20%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 270 60% 20%;
+    --primary: 270 60% 20%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 160 45% 20%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 270 10% 96%;
+    --muted-foreground: 270 10% 40%;
+    --accent: 180 100% 25%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 330 80% 40%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 270 20% 90%;
+    --input: 270 20% 90%;
+    --ring: 270 60% 20%;
+    --radius: 1rem;
+  }
+ 
+  .dark {
+    --background: 270 60% 3%;
+    --foreground: 210 40% 98%;
+    --card: 270 60% 3%;
+    --card-foreground: 210 40% 98%;
+    --popover: 270 60% 3%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 270 70% 40%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 160 45% 20%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 270 40% 10%;
+    --muted-foreground: 270 10% 70%;
+    --accent: 180 100% 25%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 330 80% 40%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 270 40% 20%;
+    --input: 270 40% 20%;
+    --ring: 270 70% 40%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border transition-colors duration-200;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+.gradient-bg {
+  @apply bg-gradient-to-r from-[#2D1B4E] via-[#1E4D45] to-[#008080];
+}
+
+.gradient-text {
+  @apply bg-gradient-to-r from-[#2D1B4E] via-[#FF69B4] to-[#008080] bg-clip-text text-transparent;
+}
+
+.gradient-border {
+  @apply border-transparent bg-gradient-to-r from-[#2D1B4E] via-[#1E4D45] to-[#008080] bg-clip-border;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.5s ease-out;
+}
+
+.animate-slide-up {
+  animation: slide-up 0.8s ease-out;
+}
+
+.animate-slide-up-delayed {
+  animation: slide-up 0.8s ease-out 0.2s both;
+}
+
+.animate-slide-up-delayed-2 {
+  animation: slide-up 0.8s ease-out 0.4s both;
+}
+
+.animate-slide-in-right {
+  animation: slide-in-right 0.5s ease-out;
+}
