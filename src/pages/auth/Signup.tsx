@@ -44,7 +44,7 @@ export default function Signup() {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="block w-full rounded-full border-gray-300 dark:border-gray-700 shadow-sm focus:border-teal-500 focus:ring-teal-500 dark:bg-gray-900 dark:text-white sm:text-sm"
+                  className="block w-full rounded-full border-gray-300 dark:border-gray-700 shadow-sm focus:border-teal-500 focus:ring-teal-500 dark:bg-gray-900 dark:text-white text-base py-3 px-4"
                 />
               </div>
             </div>
@@ -62,7 +62,7 @@ export default function Signup() {
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="block w-full rounded-full border-gray-300 dark:border-gray-700 shadow-sm focus:border-teal-500 focus:ring-teal-500 dark:bg-gray-900 dark:text-white sm:text-sm"
+                  className="block w-full rounded-full border-gray-300 dark:border-gray-700 shadow-sm focus:border-teal-500 focus:ring-teal-500 dark:bg-gray-900 dark:text-white text-base py-3 px-4"
                 />
               </div>
             </div>
@@ -80,7 +80,7 @@ export default function Signup() {
                   required
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
-                  className="block w-full rounded-full border-gray-300 dark:border-gray-700 shadow-sm focus:border-teal-500 focus:ring-teal-500 dark:bg-gray-900 dark:text-white sm:text-sm"
+                  className="block w-full rounded-full border-gray-300 dark:border-gray-700 shadow-sm focus:border-teal-500 focus:ring-teal-500 dark:bg-gray-900 dark:text-white text-base py-3 px-4"
                 />
               </div>
             </div>

@@ -150,6 +150,10 @@ export function Navbar() {
                   </Link>
                 );
               })}
+              <div className="mt-6 mb-4 flex items-center justify-between px-3">
+                <span className="text-sm font-medium text-white">Theme</span>
+                <ThemeToggle />
+              </div>
               <div className="mt-6 space-y-3">
                 <Link
                   to="/login"
