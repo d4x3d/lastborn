@@ -56,20 +56,20 @@ const testimonials = [
 export default function Home() {
   return (
     <div className="relative min-h-screen">
+      {/* Background Image - Moved to top level */}
+      <div 
+        className="fixed inset-0 z-0"
+        style={{
+          backgroundImage: `url("https://i.postimg.cc/Gm55Zz3P/background-v2.png")`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+        }}
+      />
       {/* Content */}
       <div className="relative z-10">
         {/* Hero section */}
         <div className="relative isolate overflow-hidden">
-          {/* Background Image */}
-          <div 
-            className="absolute inset-0 z-0"
-            style={{
-              backgroundImage: `url("https://i.postimg.cc/Gm55Zz3P/background-v2.png")`, // Update this with your image name
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-              backgroundRepeat: 'no-repeat',
-            }}
-          />
           <div className="mx-auto max-w-7xl px-6 pb-24 pt-10 sm:pb-32 lg:flex lg:px-8 lg:py-40">
             <div className="mx-auto max-w-2xl flex-shrink-0 lg:mx-0 lg:max-w-xl lg:pt-8">
               <div className="animate-fade-in">

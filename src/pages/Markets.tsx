@@ -1,30 +1,91 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 
-type CoinSymbol = 'btc' | 'eth' | 'bnb' | 'sol';
-
-const mockMarketData = [
-  { id: 'btc', name: 'Bitcoin', symbol: 'BTC', price: 35000, change24h: 2.5, volume24h: 28000000000 },
-  { id: 'eth', name: 'Ethereum', symbol: 'ETH', price: 2000, change24h: -1.2, volume24h: 15000000000 },
-  { id: 'bnb', name: 'Binance Coin', symbol: 'BNB', price: 240, change24h: 0.8, volume24h: 1200000000 },
-  { id: 'sol', name: 'Solana', symbol: 'SOL', price: 45, change24h: 5.2, volume24h: 2500000000 },
-];
-
-const coinImageMap: { [key in CoinSymbol]: string } = {
-  'btc': '/images/bitcoin-btc-logo.svg',
-  'eth': '/images/ethereum-eth-logo.svg',
-  'bnb': '/images/bnb-bnb-logo.svg',
-  'sol': '/images/solana-sol-logo.svg',
-};
+interface CoinData {
+  id: string;
+  symbol: string;
+  name: string;
+  image: string;
+  current_price: number;
+  price_change_percentage_24h: number;
+  total_volume: number;
+  market_cap: number;
+}
 
 export default function Markets() {
   const [searchTerm, setSearchTerm] = useState('');
+  const [coins, setCoins] = useState<CoinData[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
-  const filteredMarkets = mockMarketData.filter(market =>
-    market.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    market.symbol.toLowerCase().includes(searchTerm.toLowerCase())
+  useEffect(() => {
+    const fetchCoins = async () => {
+      try {
+        const response = await fetch(
+          'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=500&page=1&sparkline=false'
+        );
+        if (!response.ok) throw new Error('Failed to fetch data');
+        const data = await response.json();
+        setCoins(data);
+        setLoading(false);
+      } catch (err) {
+        setError('Failed to load market data');
+        setLoading(false);
+      }
+    };
+
+    fetchCoins();
+    const interval = setInterval(fetchCoins, 60000); // Update every minute
+    return () => clearInterval(interval);
+  }, []);
+
+  const filteredCoins = coins.filter(coin =>
+    coin.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    coin.symbol.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  const formatMarketCap = (value: number) => {
+    if (value >= 1e12) { // Trillion
+      return `$${(value / 1e12).toFixed(2)}T`;
+    } else if (value >= 1e9) { // Billion
+      return `$${(value / 1e9).toFixed(2)}B`;
+    } else if (value >= 1e6) { // Million
+      return `$${(value / 1e6).toFixed(2)}M`;
+    } else {
+      return `$${value.toLocaleString()}`;
+    }
+  };
+
+  const formatVolume = (value: number) => {
+    if (value >= 1e9) { // Billion
+      return `$${(value / 1e9).toFixed(2)}B`;
+    } else if (value >= 1e6) { // Million
+      return `$${(value / 1e6).toFixed(2)}M`;
+    } else {
+      return `$${value.toLocaleString()}`;
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-purple/5 to-teal/5 dark:from-purple/10 dark:to-teal/10 pt-24">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="text-center text-gray-600 dark:text-gray-400">Loading market data...</div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-purple/5 to-teal/5 dark:from-purple/10 dark:to-teal/10 pt-24">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="text-center text-red-600 dark:text-red-400">{error}</div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple/5 to-teal/5 dark:from-purple/10 dark:to-teal/10 pt-24">
@@ -47,23 +108,26 @@ export default function Markets() {
           </div>
         </div>
         <div className="mt-8 flow-root">
-          <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-            <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+          <div className="overflow-x-hidden">
+            <div className="inline-block min-w-full align-middle">
               <div className="overflow-hidden shadow ring-1 ring-purple/10 dark:ring-purple/20 rounded-lg">
                 <table className="min-w-full divide-y divide-purple/10 dark:divide-purple/20">
                   <thead className="bg-purple/5 dark:bg-purple/10">
                     <tr>
-                      <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 dark:text-white sm:pl-6">
+                      <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-xs font-semibold text-gray-900 dark:text-white sm:pl-6">
                         Name
                       </th>
-                      <th scope="col" className="px-3 py-3.5 text-right text-sm font-semibold text-gray-900 dark:text-white">
+                      <th scope="col" className="px-3 py-3.5 text-right text-xs font-semibold text-gray-900 dark:text-white">
                         Price
                       </th>
-                      <th scope="col" className="px-3 py-3.5 text-right text-sm font-semibold text-gray-900 dark:text-white">
-                        24h Change
+                      <th scope="col" className="px-3 py-3.5 text-right text-xs font-semibold text-gray-900 dark:text-white">
+                        24h
                       </th>
-                      <th scope="col" className="px-3 py-3.5 text-right text-sm font-semibold text-gray-900 dark:text-white">
-                        24h Volume
+                      <th scope="col" className="px-3 py-3.5 text-right text-xs font-semibold text-gray-900 dark:text-white">
+                        Cap
+                      </th>
+                      <th scope="col" className="px-3 py-3.5 text-right text-xs font-semibold text-gray-900 dark:text-white">
+                        Volume
                       </th>
                       <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
                         <span className="sr-only">Trade</span>
@@ -71,35 +135,38 @@ export default function Markets() {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-purple/10 dark:divide-purple/20 bg-white dark:bg-gray-900">
-                    {filteredMarkets.map((market) => (
-                      <tr key={market.id} className="hover:bg-purple/5 dark:hover:bg-purple/10 transition-colors duration-200">
-                        <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm sm:pl-6">
+                    {filteredCoins.map((coin) => (
+                      <tr key={coin.id} className="hover:bg-purple/5 dark:hover:bg-purple/10 transition-colors duration-200">
+                        <td className="whitespace-nowrap py-2 pl-4 pr-3 text-xs sm:pl-6">
                           <div className="flex items-center">
                             <img 
-                              src={coinImageMap[market.symbol.toLowerCase() as CoinSymbol]} 
-                              alt={market.name} 
-                              className="h-8 w-8 rounded-full mr-4"
+                              src={coin.image} 
+                              alt={coin.name} 
+                              className="h-6 w-6 rounded-full"
                             />
-                            <div className="ml-4">
-                              <div className="font-medium text-gray-900 dark:text-white">{market.name}</div>
-                              <div className="text-teal">{market.symbol}</div>
+                            <div className="ml-2">
+                              <div className="font-medium text-gray-900 dark:text-white">{coin.name}</div>
+                              <div className="text-teal text-xs">{coin.symbol.toUpperCase()}</div>
                             </div>
                           </div>
                         </td>
-                        <td className="whitespace-nowrap px-3 py-4 text-right text-sm text-gray-500 dark:text-gray-400">
-                          ${market.price.toLocaleString()}
+                        <td className="whitespace-nowrap px-2 py-2 text-right text-xs text-gray-500 dark:text-gray-400">
+                          ${coin.current_price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                         </td>
-                        <td className={`whitespace-nowrap px-3 py-4 text-right text-sm ${
-                          market.change24h >= 0 ? 'text-forest dark:text-forest-light' : 'text-pink dark:text-pink-light'
+                        <td className={`whitespace-nowrap px-2 py-2 text-right text-xs ${
+                          coin.price_change_percentage_24h >= 0 ? 'text-forest dark:text-forest-light' : 'text-pink dark:text-pink-light'
                         }`}>
-                          {market.change24h > 0 ? '+' : ''}{market.change24h}%
+                          {coin.price_change_percentage_24h > 0 ? '+' : ''}{coin.price_change_percentage_24h.toFixed(1)}%
                         </td>
-                        <td className="whitespace-nowrap px-3 py-4 text-right text-sm text-gray-500 dark:text-gray-400">
-                          ${(market.volume24h / 1000000).toFixed(2)}M
+                        <td className="whitespace-nowrap px-2 py-2 text-right text-xs text-gray-500 dark:text-gray-400">
+                          {formatMarketCap(coin.market_cap)}
                         </td>
-                        <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                          <Link to={`/trade/${market.symbol.toLowerCase()}`}>
-                            <Button variant="gradient" size="sm">
+                        <td className="whitespace-nowrap px-2 py-2 text-right text-xs text-gray-500 dark:text-gray-400">
+                          {formatVolume(coin.total_volume)}
+                        </td>
+                        <td className="relative whitespace-nowrap py-2 pl-2 pr-4 text-right text-xs font-medium sm:pr-6">
+                          <Link to={`/trade/${coin.symbol.toLowerCase()}`}>
+                            <Button variant="gradient" size="sm" className="px-2 py-1 text-xs">
                               Trade
                             </Button>
                           </Link>

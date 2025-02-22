@@ -30,18 +30,19 @@ export function Navbar() {
       <nav className={`mx-4 my-4 transition-all duration-300 ease-in-out ${
         scrolled ? 'scale-[0.97]' : ''
       }`}>
-        <div className={`relative bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 overflow-hidden transition-all duration-300 ${
-          scrolled ? 'rounded-full shadow-lg shadow-indigo-500/20' : 'rounded-lg'
+        <div className={`relative overflow-hidden transition-all duration-300 ${
+          scrolled ? 'rounded-full shadow-lg shadow-purple/20 bg-gradient-to-r from-purple via-pink to-teal' : 'rounded-lg bg-transparent'
         }`}>
           {/* Gradient overlay */}
-          <div className="absolute inset-0 bg-white/10 backdrop-blur-sm mix-blend-overlay" />
+          <div className="absolute inset-0 bg-white/5 backdrop-blur-sm" />
 
           <div className="relative px-6 py-4">
             <div className="flex items-center justify-between">
               <div className="flex lg:flex-1">
-                <Link to="/" className="-m-1.5 p-1.5">
+                <Link to="/" className="-m-1.5 p-1.5 flex items-center gap-2">
+                  <img src="/images/icon.png" alt="Logo" className="h-8 w-8" />
                   <span className="text-xl font-bold text-white">
-                    CryptoTrade
+                    JayeCane
                   </span>
                 </Link>
               </div>
@@ -64,15 +65,16 @@ export function Navbar() {
                     <Link
                       key={item.name}
                       to={item.href}
-                      className={`relative px-4 py-2 text-sm font-semibold transition-all duration-300 rounded-full ${
+                      className={`relative px-4 py-2 text-sm font-semibold transition-all duration-300 rounded-full flex items-center gap-2 ${
                         isActive 
-                          ? 'text-white bg-white/20'
-                          : 'text-white/80 hover:text-white hover:bg-white/10'
+                          ? 'text-white bg-white/10'
+                          : 'text-white/80 hover:text-white hover:bg-white/5'
                       }`}
                     >
+                      <item.icon className="h-4 w-4" />
                       {item.name}
                       {isActive && (
-                        <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-white animate-fade-in" />
+                        <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-white/20 animate-fade-in" />
                       )}
                     </Link>
                   );
@@ -85,7 +87,7 @@ export function Navbar() {
                   <Button 
                     variant="outline" 
                     size="sm"
-                    className="bg-white/10 border-white/20 text-white hover:bg-white/20 transition-colors duration-300"
+                    className="bg-white/5 border-white/10 text-white hover:bg-white/10 transition-colors duration-300"
                   >
                     Log in
                   </Button>
@@ -93,7 +95,7 @@ export function Navbar() {
                 <Link to="/signup">
                   <Button 
                     size="sm"
-                    className="bg-white text-indigo-600 hover:bg-white/90 transition-all duration-300"
+                    className="bg-white text-purple hover:bg-white/90 transition-all duration-300"
                   >
                     Sign up
                   </Button>
@@ -114,11 +116,12 @@ export function Navbar() {
           className="fixed inset-0 bg-black/20 backdrop-blur-sm dark:bg-black/40"
           onClick={() => setMobileMenuOpen(false)}
         />
-        <div className="fixed inset-x-4 top-4 rounded-2xl bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 shadow-xl">
+        <div className="fixed inset-x-4 top-4 rounded-2xl bg-gradient-to-r from-purple via-pink to-teal shadow-xl">
           <div className="flex items-center justify-between p-6">
-            <Link to="/" className="-m-1.5 p-1.5" onClick={() => setMobileMenuOpen(false)}>
+            <Link to="/" className="-m-1.5 p-1.5 flex items-center gap-2" onClick={() => setMobileMenuOpen(false)}>
+              <img src="/images/icon.png" alt="Logo" className="h-8 w-8" />
               <span className="text-xl font-bold text-white">
-                CryptoTrade
+                JayeCane
               </span>
             </Link>
             <button
@@ -140,8 +143,8 @@ export function Navbar() {
                     to={item.href}
                     className={`-mx-3 flex items-center gap-2 rounded-full px-4 py-3 text-base font-semibold transition-colors duration-300 ${
                       isActive
-                        ? 'bg-white/20 text-white'
-                        : 'text-white/80 hover:bg-white/10 hover:text-white'
+                        ? 'bg-white/10 text-white'
+                        : 'text-white/80 hover:bg-white/5 hover:text-white'
                     }`}
                     onClick={() => setMobileMenuOpen(false)}
                   >
@@ -162,7 +165,7 @@ export function Navbar() {
                 >
                   <Button 
                     variant="outline" 
-                    className="w-full justify-center bg-white/10 border-white/20 text-white hover:bg-white/20"
+                    className="w-full justify-center bg-white/5 border-white/10 text-white hover:bg-white/10"
                   >
                     Log in
                   </Button>
@@ -173,7 +176,7 @@ export function Navbar() {
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   <Button 
-                    className="w-full justify-center bg-white text-indigo-600 hover:bg-white/90"
+                    className="w-full justify-center bg-white text-purple hover:bg-white/90"
                   >
                     Sign up
                   </Button>

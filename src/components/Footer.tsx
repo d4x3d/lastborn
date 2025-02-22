@@ -31,11 +31,12 @@ const navigation = {
 const companyLogos = [ // Array of company logo filenames
   'Bank_of_America-Logo.wine.svg',
   'Binance-Logo.wine.svg',
+  'Bitcoin-Logo.wine.svg',
+  'PayPal-Logo.wine.svg',
+  'The_New_York_Times-Logo.wine.svg',
   'bybit-seeklogo.svg',
   'kucoin-logo.svg',
-  'PayPal-Logo.wine.svg',
-  'trust-wallet-seeklogo.svg',
-  'The_New_York_Times-Logo.wine.svg',
+  'trust-wallet-seeklogo.svg'
 ];
 
 export function Footer() {
