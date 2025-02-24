@@ -29,7 +29,7 @@ export default function Login() {
         </div>
 
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-          <div className="space-y-4 rounded-lg bg-white/50 dark:bg-gray-800/50 p-8 shadow-2xl shadow-black/5 ring-1 ring-slate-700/10 dark:ring-white/10">
+          <div className="space-y-4 rounded-lg bg-white/90 dark:bg-gray-800/50 p-8 shadow-lg shadow-black/10 ring-1 ring-gray-300 dark:ring-white/10">
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                 Email address
@@ -43,7 +43,7 @@ export default function Login() {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="block w-full rounded-full border-gray-300 dark:border-gray-700 shadow-sm focus:border-teal-500 focus:ring-teal-500 dark:bg-gray-900 dark:text-white text-base py-3 px-4"
+                  className="block w-full rounded-full bg-white dark:bg-gray-900 border-gray-400 dark:border-gray-700 shadow-sm focus:border-teal-500 focus:ring-teal-500 dark:text-white text-gray-900 text-base py-3 px-4"
                 />
               </div>
             </div>
@@ -61,7 +61,7 @@ export default function Login() {
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="block w-full rounded-full border-gray-300 dark:border-gray-700 shadow-sm focus:border-teal-500 focus:ring-teal-500 dark:bg-gray-900 dark:text-white text-base py-3 px-4"
+                  className="block w-full rounded-full bg-white dark:bg-gray-900 border-gray-400 dark:border-gray-700 shadow-sm focus:border-teal-500 focus:ring-teal-500 dark:text-white text-gray-900 text-base py-3 px-4"
                 />
               </div>
             </div>

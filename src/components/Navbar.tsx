@@ -31,17 +31,17 @@ export function Navbar() {
         scrolled ? 'scale-[0.97]' : ''
       }`}>
         <div className={`relative overflow-hidden transition-all duration-300 ${
-          scrolled ? 'rounded-full shadow-lg shadow-purple/20 bg-gradient-to-r from-purple via-pink to-teal' : 'rounded-lg bg-transparent'
+          scrolled ? 'rounded-full shadow-lg shadow-purple/20 bg-gradient-to-r from-purple via-pink to-teal' : 'rounded-lg bg-gray-100/80 dark:bg-transparent'
         }`}>
           {/* Gradient overlay */}
-          <div className="absolute inset-0 bg-white/5 backdrop-blur-sm" />
+          <div className="absolute inset-0 bg-white/80 dark:bg-white/5 backdrop-blur-sm" />
 
           <div className="relative px-6 py-4">
             <div className="flex items-center justify-between">
               <div className="flex lg:flex-1">
                 <Link to="/" className="-m-1.5 p-1.5 flex items-center gap-2">
                   <img src="/images/icon.png" alt="Logo" className="h-8 w-8" />
-                  <span className="text-xl font-bold text-white">
+                  <span className="text-xl font-bold text-gray-900 dark:text-white">
                     JayeCane
                   </span>
                 </Link>
@@ -50,7 +50,7 @@ export function Navbar() {
               <div className="flex lg:hidden">
                 <button
                   type="button"
-                  className="-m-2.5 inline-flex items-center justify-center rounded-full p-2.5 text-white"
+                  className="-m-2.5 inline-flex items-center justify-center rounded-full p-2.5 text-gray-900 dark:text-white"
                   onClick={() => setMobileMenuOpen(true)}
                 >
                   <span className="sr-only">Open main menu</span>
@@ -67,14 +67,14 @@ export function Navbar() {
                       to={item.href}
                       className={`relative px-4 py-2 text-sm font-semibold transition-all duration-300 rounded-full flex items-center gap-2 ${
                         isActive 
-                          ? 'text-white bg-white/10'
-                          : 'text-white/80 hover:text-white hover:bg-white/5'
+                          ? 'text-gray-900 dark:text-white bg-gray-200/80 dark:bg-white/10'
+                          : 'text-gray-700 hover:text-gray-900 dark:text-white/80 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/5'
                       }`}
                     >
                       <item.icon className="h-4 w-4" />
                       {item.name}
                       {isActive && (
-                        <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-white/20 animate-fade-in" />
+                        <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-gray-300 dark:bg-white/20 animate-fade-in" />
                       )}
                     </Link>
                   );
