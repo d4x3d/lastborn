@@ -2,37 +2,54 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import * as HeroIcons from '@heroicons/react/24/outline';
+import axios from 'axios';
 
-const livePrices = [
-  { symbol: 'BTC', name: 'Bitcoin', price: '45,321.00', change: '+5.2' },
-  { symbol: 'ETH', name: 'Ethereum', price: '2,831.45', change: '+3.8' },
-  { symbol: 'SOL', name: 'Solana', price: '98.76', change: '+7.2' },
-  { symbol: 'BNB', name: 'Binance', price: '312.50', change: '-1.2' },
-];
+interface CryptoPrice {
+  id: string;
+  symbol: string;
+  name: string;
+  current_price: number;
+  price_change_percentage_24h: number;
+  image: string;
+}
 
-// ... (keep all other constant declarations)
+// Extended list of crypto coins to track
+const coinIds = [
+  'bitcoin',
+  'ethereum',
+  'solana',
+  'binancecoin',
+  'cardano',
+  'ripple',
+  'polkadot',
+  'dogecoin',
+  'avalanche-2',
+  'chainlink'
+].join(',');
 
-export default function Home() {
-  // ... (keep state and effect hooks)
-
-  return (
-    <div className="relative min-h-screen bg-gradient-to-b from-gray-900 via-blue-900 to-black">
-      {/* Background Image with Overlay */}
-      <div 
-        className="fixed inset-0 z-0"
-        style={{
-          backgroundImage: `url("https://i.postimg.cc/Gm55Zz3P/background-v2.png")`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-          opacity: 0.4,
-        }}
-      />
-      
-      {/* Floating Crypto Icons */}
-      <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none">
-        {['/images/bitcoin-btc-logo.svg', '/images/ethereum-eth-logo.svg', '/images/solana-sol-logo.svg'].map((icon, index) => (
-          <img
+const features = [
+  {
+    name: 'Lightning-Fast Trading',
+    description: 'Execute trades instantly with our high-performance trading engine.',
+    Icon: HeroIcons.BoltIcon,
+    bgGradient: 'from-yellow-400/20 to-orange-500/20',
+  },
+  {
+    name: 'Bank-Grade Security',
+    description: 'Your assets are protected with military-grade encryption and secure cold storage.',
+    Icon: HeroIcons.ShieldCheckIcon,
+    bgGradient: 'from-green-400/20 to-emerald-500/20',
+  },
+  {
+    name: 'Global Access',
+    description: 'Trade from anywhere in the world with our reliable platform.',
+    Icon: HeroIcons.GlobeAltIcon,
+    bgGradient: 'from-blue-400/20 to-indigo-500/20',
+  },
+  {
+    name: '24/7 Expert Support',
+    description: 'Get help anytime with our dedicated support team of crypto experts.',
+    Icon: HeroIcons.UserGroupIcon,
     bgGradient: 'from-purple-400/20 to-pink-500/20',
   },
 ];
@@ -94,12 +111,25 @@ const testimonials = [
 ];
 
 export default function Home() {
-  const [currentPriceIndex, setCurrentPriceIndex] = useState(0);
+  const [cryptoPrices, setCryptoPrices] = useState<CryptoPrice[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentPriceIndex((prev) => (prev + 1) % livePrices.length);
-    }, 3000);
+    const fetchPrices = async () => {
+      try {
+        const response = await axios.get(
+          `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${coinIds}&order=market_cap_desc&sparkline=false`
+        );
+        setCryptoPrices(response.data);
+        setIsLoading(false);
+      } catch (error) {
+        console.error('Error fetching crypto prices:', error);
+        setIsLoading(false);
+      }
+    };
+
+    fetchPrices();
+    const interval = setInterval(fetchPrices, 30000); // Update every 30 seconds
     return () => clearInterval(interval);
   }, []);
 
@@ -119,11 +149,11 @@ export default function Home() {
       
       {/* Floating Crypto Icons */}
       <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none">
-        {['/images/bitcoin-btc-logo.svg', '/images/ethereum-eth-logo.svg', '/images/solana-sol-logo.svg'].map((icon, index) => (
+        {cryptoPrices.slice(0, 3).map((coin, index) => (
           <img
-            key={index}
-            src={icon}
-            alt="crypto"
+            key={coin.id}
+            src={coin.image}
+            alt={coin.name}
             className="absolute animate-float opacity-20"
             style={{
               width: '80px',
@@ -142,37 +172,41 @@ export default function Home() {
       {/* Content */}
       <div className="relative z-10">
         {/* Live Price Ticker */}
-        <div className="w-full overflow-hidden bg-gradient-to-r from-black/50 via-blue-900/30 to-black/50 backdrop-blur-sm border-b border-white/10">
-          <div className="max-w-7xl mx-auto px-4 py-2">
-            <div className="flex items-center justify-between animate-slide-left">
-              {livePrices.map((coin, index) => (
-                <div 
-                  key={coin.symbol}
-                  className={`flex items-center space-x-4 transition-opacity duration-500 ${
-                    index === currentPriceIndex ? 'opacity-100' : 'opacity-60'
-                  }`}
-                >
-                  <img 
-                    src={`/images/${coin.symbol.toLowerCase()}.svg`}
-                    alt={coin.name}
-                    className="h-6 w-6"
-                  />
-                  <div>
-                    <span className="text-white font-medium">{coin.symbol}</span>
-                    <span className="text-white/60 mx-2">${coin.price}</span>
-                    <span className={coin.change.startsWith('+') ? 'text-green-400' : 'text-red-400'}>
-                      {coin.change}%
-                    </span>
-                  </div>
+        <div className="w-full overflow-hidden bg-black/50 backdrop-blur-md border-b border-white/10">
+          <div className="max-w-7xl mx-auto px-4">
+            <div className="flex items-center gap-8 py-1.5 overflow-x-auto whitespace-nowrap scrollbar-hide">
+              {isLoading ? (
+                <div className="flex items-center justify-center w-full py-2">
+                  <div className="animate-pulse text-white/60">Loading prices...</div>
                 </div>
-              ))}
+              ) : (
+                cryptoPrices.map((coin) => (
+                  <div 
+                    key={coin.id}
+                    className="flex items-center space-x-2 transition-all duration-300 hover:bg-white/5 px-3 py-1 rounded-full"
+                  >
+                    <img 
+                      src={coin.image}
+                      alt={coin.name}
+                      className="h-6 w-6"
+                    />
+                    <div className="flex items-center gap-2">
+                      <span className="text-white font-medium">{coin.symbol.toUpperCase()}</span>
+                      <span className="text-white/60">${coin.current_price.toLocaleString()}</span>
+                      <span className={coin.price_change_percentage_24h >= 0 ? 'text-green-400' : 'text-red-400'}>
+                        {coin.price_change_percentage_24h.toFixed(2)}%
+                      </span>
+                    </div>
+                  </div>
+                ))
+              )}
             </div>
           </div>
         </div>
 
         {/* Hero section */}
         <div className="relative overflow-hidden">
-          <div className="mx-auto max-w-7xl px-6 py-24 sm:py-32 md:py-40 lg:flex items-center">
+          <div className="mx-auto max-w-7xl px-6 py-16 sm:py-24 lg:flex items-center">
             <div className="max-w-2xl">
               <div className="animate-fade-in space-y-8">
                 <div className="inline-flex items-center rounded-full px-4 py-1 bg-gradient-to-r from-blue-400/10 to-purple-400/10 backdrop-blur-sm border border-blue-400/20">
@@ -189,7 +223,7 @@ export default function Home() {
                   <Link to="/signup">
                     <Button 
                       size="lg" 
-                      className="gradient-bg glow-strong hover:scale-105 transition-all duration-300 relative overflow-hidden group"
+                      className="gradient-bg glow-strong hover:scale-105 transition-all duration-300 relative overflow-hidden group px-8"
                     >
                       <span className="relative z-10">Start Trading</span>
                       <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-r from-teal-400 via-blue-500 to-purple-600"></div>
@@ -199,7 +233,7 @@ export default function Home() {
                     <Button 
                       variant="outline" 
                       size="lg" 
-                      className="glass-effect hover:bg-white/10"
+                      className="glass-effect hover:bg-white/10 px-8"
                     >
                       View Markets
                     </Button>
@@ -248,31 +282,6 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Why Choose Us section */}
-        <div className="mx-auto max-w-7xl px-6 lg:px-8 py-24">
-          <div className="text-center space-y-4 mb-16">
-            <h2 className="text-3xl font-bold gradient-text glow sm:text-4xl">
-              Why Choose Us
-            </h2>
-            <p className="text-lg text-white/60">
-              Industry-leading features designed for serious traders
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {whyChooseUs.map((item) => {
-              const IconComponent = item.icon;
-              return (
-                <div key={item.title} className="glass-effect rounded-xl p-6 hover-glow relative overflow-hidden group">
-                  <div className="absolute inset-0 bg-gradient-to-br from-blue-400/10 via-purple-400/10 to-pink-400/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  <IconComponent className="h-8 w-8 text-blue-400 glow mb-4" />
-                  <h3 className="text-xl font-bold text-white mb-2">{item.title}</h3>
-                  <p className="text-white/60">{item.description}</p>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-
         {/* Feature section */}
         <div className="mx-auto max-w-7xl px-6 lg:px-8 py-24">
           <div className="text-center space-y-4 mb-16">
@@ -297,6 +306,31 @@ export default function Home() {
                     <h3 className="text-lg font-bold text-white mb-2">{feature.name}</h3>
                     <p className="text-white/60">{feature.description}</p>
                   </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Why Choose Us section */}
+        <div className="mx-auto max-w-7xl px-6 lg:px-8 py-24">
+          <div className="text-center space-y-4 mb-16">
+            <h2 className="text-3xl font-bold gradient-text glow sm:text-4xl">
+              Why Choose Us
+            </h2>
+            <p className="text-lg text-white/60">
+              Industry-leading features designed for serious traders
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {whyChooseUs.map((item) => {
+              const IconComponent = item.icon;
+              return (
+                <div key={item.title} className="glass-effect rounded-xl p-6 hover-glow relative overflow-hidden group">
+                  <div className="absolute inset-0 bg-gradient-to-br from-blue-400/10 via-purple-400/10 to-pink-400/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <IconComponent className="h-8 w-8 text-blue-400 glow mb-4" />
+                  <h3 className="text-xl font-bold text-white mb-2">{item.title}</h3>
+                  <p className="text-white/60">{item.description}</p>
                 </div>
               );
             })}
@@ -375,26 +409,28 @@ export default function Home() {
         </div>
 
         {/* CTA section */}
-        <div className="relative mt-32 px-6 py-32 sm:mt-56 sm:py-40 lg:px-8">
-          <div className="glass-effect rounded-2xl p-8 max-w-3xl mx-auto text-center relative overflow-hidden group">
-            <div className="absolute inset-0 bg-gradient-to-br from-blue-400/10 via-purple-400/10 to-pink-400/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            <div className="relative z-10">
-              <h2 className="text-3xl font-bold gradient-text glow sm:text-4xl mb-6">
-                Ready to start trading?
-              </h2>
-              <p className="text-lg text-white/80 mb-8">
-                Join millions of traders and investors on the most trusted cryptocurrency trading platform.
-              </p>
-              <div className="flex items-center justify-center gap-x-6">
-                <Link to="/signup">
-                  <Button 
-                    size="lg" 
-                    className="gradient-bg glow-strong hover:scale-105 transition-all duration-300 relative overflow-hidden group"
-                  >
-                    <span className="relative z-10">Create Account</span>
-                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-r from-teal-400 via-blue-500 to-purple-600"></div>
-                  </Button>
-                </Link>
+        <div className="relative px-6 py-32 sm:py-40 lg:px-8">
+          <div className="mx-auto max-w-3xl">
+            <div className="glass-effect rounded-2xl p-8 text-center relative overflow-hidden group">
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-400/10 via-purple-400/10 to-pink-400/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="relative z-10">
+                <h2 className="text-3xl font-bold gradient-text glow sm:text-4xl mb-6">
+                  Ready to start trading?
+                </h2>
+                <p className="text-lg text-white/80 mb-8">
+                  Join millions of traders and investors on the most trusted cryptocurrency trading platform.
+                </p>
+                <div className="flex items-center justify-center gap-x-6">
+                  <Link to="/signup">
+                    <Button 
+                      size="lg" 
+                      className="gradient-bg glow-strong hover:scale-105 transition-all duration-300 relative overflow-hidden group px-8"
+                    >
+                      <span className="relative z-10">Create Account</span>
+                      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-r from-teal-400 via-blue-500 to-purple-600"></div>
+                    </Button>
+                  </Link>
+                </div>
               </div>
             </div>
           </div>

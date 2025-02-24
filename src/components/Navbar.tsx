@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from './ui/button';
-import { ThemeToggle } from './ThemeToggle';
 import * as HeroIcons from '@heroicons/react/24/outline';
 
 const navigation = [
@@ -28,13 +27,10 @@ export function Navbar() {
   return (
     <div className="fixed inset-x-0 top-0 z-50">
       <nav className={`transition-all duration-300 ease-in-out ${
-        scrolled ? 'bg-black/50 backdrop-blur-md' : ''
+        scrolled ? 'bg-black/50 backdrop-blur-md rounded-full mx-4 my-2' : 'bg-black/50 backdrop-blur-md'
       }`}>
-        <div className={`relative transition-all duration-300`}>
-          {/* Background with gradient border */}
-          <div className="absolute inset-0 bg-black/50 backdrop-blur-md" />
-          
-          <div className="relative px-6 py-3">
+        <div className="relative">
+          <div className="relative px-4 py-3">
             <div className="flex items-center justify-between">
               <div className="flex lg:flex-1">
                 <Link to="/" className="-m-1.5 p-1.5 flex items-center gap-2">
@@ -80,7 +76,6 @@ export function Navbar() {
               </div>
 
               <div className="hidden lg:flex lg:flex-1 lg:justify-end lg:gap-x-4 items-center">
-                <ThemeToggle />
                 <Link to="/login">
                   <Button 
                     variant="outline" 
@@ -152,10 +147,6 @@ export function Navbar() {
                   </Link>
                 );
               })}
-              <div className="mt-6 mb-4 flex items-center justify-between px-3">
-                <span className="text-sm font-medium text-white">Theme</span>
-                <ThemeToggle />
-              </div>
               <div className="mt-6 space-y-3">
                 <Link
                   to="/login"

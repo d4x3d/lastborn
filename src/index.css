@@ -4,24 +4,18 @@
  
 @layer base {
   :root {
-    --background: 0 0% 98%;
-    --foreground: 220 15% 25%;
-    /* ... (keep existing CSS variables) ... */
-  }
- 
-  .dark {
-    --background: 220 15% 8%;
-    --foreground: 210 40% 98%;
-    /* ... (keep existing dark mode variables) ... */
+    --background: 0 0% 0%;
+    --foreground: 0 0% 100%;
   }
 }
 
-@layer base {
-  * {
-    @apply border-border transition-all duration-300;
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
-  body {
-    @apply bg-background text-foreground overflow-x-hidden;
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
   }
 }
 
@@ -175,17 +169,6 @@
   animation: price-change 0.3s ease-out;
 }
 
-/* Background Pulse */
-@keyframes bg-pulse {
-  0% { background-opacity: 0.1; }
-  50% { background-opacity: 0.2; }
-  100% { background-opacity: 0.1; }
-}
-
-.animate-bg-pulse {
-  animation: bg-pulse 2s ease-in-out infinite;
-}
-
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
@@ -200,16 +183,14 @@
   @apply bg-blue-500/50 rounded-full hover:bg-blue-500/70 transition-colors duration-200;
 }
 
-/* Backdrop Blur */
-.backdrop-blur-sm {
-  backdrop-filter: blur(8px);
-}
-
-.bg-white\/5 {
-  background-color: rgb(255 255 255 / 0.05);
-}
-
-/* Dark Mode Transitions */
-.dark {
-  transition: background-color 0.3s ease-in-out;
+/* Mobile Optimizations */
+@media (max-width: 640px) {
+  .glass-effect {
+    backdrop-filter: blur(4px);
+  }
+  
+  .gradient-bg,
+  .gradient-text {
+    background-size: 150% auto;
+  }
 }

@@ -1,12 +1,12 @@
 /** @type {import('tailwindcss').Config} */
-export default {
+module.exports = {
   darkMode: ["class"],
   content: [
     './pages/**/*.{ts,tsx}',
     './components/**/*.{ts,tsx}',
     './app/**/*.{ts,tsx}',
     './src/**/*.{ts,tsx}',
-  ],
+	],
   theme: {
     container: {
       center: true,
@@ -17,69 +17,45 @@ export default {
     },
     extend: {
       colors: {
-        border: "hsl(var(--border))",
-        input: "hsl(var(--input))",
-        ring: "hsl(var(--ring))",
-        background: "hsl(var(--background))",
-        foreground: "hsl(var(--foreground))",
+        border: "rgb(255 255 255 / 0.1)",
+        input: "rgb(255 255 255 / 0.1)",
+        ring: "rgb(255 255 255 / 0.1)",
+        background: "rgb(0 0 0)",
+        foreground: "rgb(255 255 255)",
         primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
+          DEFAULT: "rgb(147 51 234)",
+          foreground: "rgb(255 255 255)",
         },
         secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
+          DEFAULT: "rgb(31 41 55)",
+          foreground: "rgb(255 255 255)",
         },
         destructive: {
-          DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))",
+          DEFAULT: "rgb(239 68 68)",
+          foreground: "rgb(255 255 255)",
         },
         muted: {
-          DEFAULT: "hsl(var(--muted))",
-          foreground: "hsl(var(--muted-foreground))",
+          DEFAULT: "rgb(31 41 55)",
+          foreground: "rgb(156 163 175)",
         },
         accent: {
-          DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
+          DEFAULT: "rgb(31 41 55)",
+          foreground: "rgb(255 255 255)",
         },
         popover: {
-          DEFAULT: "hsl(var(--popover))",
-          foreground: "hsl(var(--popover-foreground))",
+          DEFAULT: "rgb(0 0 0)",
+          foreground: "rgb(255 255 255)",
         },
         card: {
-          DEFAULT: "hsl(var(--card))",
-          foreground: "hsl(var(--card-foreground))",
-        },
-        blue: {
-          DEFAULT: '#1E3A8A',
-          light: '#2563EB',
-          dark: '#1E40AF',
-        },
-        gold: {
-          DEFAULT: '#FFD700',
-          light: '#FDE68A',
-          dark: '#F59E0B',
-        },
-        grey: {
-          DEFAULT: '#F3F4F6',
-          light: '#F9FAFB',
-          dark: '#E5E7EB',
-        },
-        navy: {
-          DEFAULT: '#1E3A8A',
-          light: '#2563EB',
-          dark: '#1E40AF',
+          DEFAULT: "rgb(0 0 0)",
+          foreground: "rgb(255 255 255)",
         },
       },
       borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
-      },
-      backgroundImage: {
-        'gradient-custom': 'linear-gradient(to right, var(--tw-gradient-stops))',
+        lg: "0.5rem",
+        md: "calc(0.5rem - 2px)",
+        sm: "calc(0.5rem - 4px)",
       },
     },
   },
-  plugins: [],
 }
