@@ -44,7 +44,7 @@ export default function Dashboard() {
   const [balance] = useState('125,000.00');
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 via-blue-900 to-black py-12">
+    <div className="min-h-screen bg-gradient-to-b from-gray-900 via-blue-900 to-black pt-[calc(64px+2rem)] pb-12">
       <div className="container mx-auto px-4">
         {/* Balance Card */}
         <div className="glass-effect rounded-2xl p-8 mb-8">
