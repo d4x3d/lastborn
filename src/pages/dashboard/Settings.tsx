@@ -37,40 +37,40 @@ export default function Settings() {
   };
 
   return (
-    <div className="max-w-2xl mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 border border-purple/10 dark:border-purple/20">
-      <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-6">Account Settings</h2>
+    <div className="max-w-2xl mx-auto glass-effect rounded-2xl p-8 animate-fade-in">
+      <h2 className="text-2xl font-bold gradient-text glow mb-8">Account Settings</h2>
 
       <div className="space-y-8">
         {/* Wallet Section */}
         <div>
-          <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4">Wallet Settings</h3>
-          <div className="bg-gradient-to-br from-purple/5 to-teal/5 dark:from-purple/10 dark:to-teal/10 rounded-lg p-6">
+          <h3 className="text-lg font-medium gradient-text mb-4">Wallet Settings</h3>
+          <div className="glass-effect rounded-xl p-6 hover-glow">
             <div className="flex items-center gap-3 mb-4">
-              <WalletIcon className="h-6 w-6 text-teal" />
-              <h4 className="text-base font-medium text-gray-900 dark:text-white">
+              <WalletIcon className="h-6 w-6 text-teal-400 glow" />
+              <h4 className="text-base font-medium gradient-text">
                 {isWalletLinked ? 'Linked Wallet' : 'Link Your Wallet'}
               </h4>
             </div>
-            <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
+            <p className="text-sm text-blue-400 mb-4">
               {isWalletLinked 
                 ? 'Your wallet is linked. You can now make withdrawals to this address.'
                 : 'Link your wallet address to enable withdrawals. Make sure to double-check the address.'}
             </p>
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-white mb-2">
                   Wallet Address
                 </label>
                 <input
                   type="text"
                   value={walletAddress}
                   onChange={(e) => setWalletAddress(e.target.value)}
-                  className="block w-full rounded-full border-gray-300 dark:border-gray-700 shadow-sm focus:ring-teal focus:border-teal dark:bg-gray-900 dark:text-white text-base py-3 px-4"
+                  className="block w-full rounded-full bg-white/10 border-0 text-white backdrop-blur-lg focus:ring-2 focus:ring-teal-500 transition-all duration-300 text-base py-3 px-4"
                   placeholder="Enter your wallet address"
                 />
               </div>
               {isWalletLinked && (
-                <div className="bg-forest/10 dark:bg-forest/20 text-forest dark:text-forest-light rounded-lg p-3 text-sm">
+                <div className="glass-effect rounded-lg p-3 text-sm text-teal-400 glow">
                   ✓ Wallet successfully linked
                 </div>
               )}
@@ -80,25 +80,25 @@ export default function Settings() {
 
         {/* Profile Section */}
         <div>
-          <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4">Profile Information</h3>
+          <h3 className="text-lg font-medium gradient-text mb-4">Profile Information</h3>
           <div className="grid grid-cols-1 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label className="block text-sm font-medium text-white mb-2">
                 Email Address
               </label>
               <input
                 type="email"
-                className="block w-full rounded-full border-gray-300 dark:border-gray-700 shadow-sm focus:ring-teal focus:border-teal dark:bg-gray-900 dark:text-white text-base py-3 px-4"
+                className="block w-full rounded-full bg-white/10 border-0 text-white backdrop-blur-lg focus:ring-2 focus:ring-teal-500 transition-all duration-300 text-base py-3 px-4"
                 value="user@example.com"
                 disabled
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label className="block text-sm font-medium text-white mb-2">
                 Time Zone
               </label>
               <select
-                className="block w-full rounded-full border-gray-300 dark:border-gray-700 shadow-sm focus:ring-teal focus:border-teal dark:bg-gray-900 dark:text-white text-base py-3 px-4"
+                className="block w-full rounded-full bg-white/10 border-0 text-white backdrop-blur-lg focus:ring-2 focus:ring-teal-500 transition-all duration-300 text-base py-3 px-4"
                 defaultValue="UTC"
               >
                 <option value="UTC">UTC</option>
@@ -112,34 +112,40 @@ export default function Settings() {
 
         {/* Security Settings */}
         <div>
-          <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4">Security Settings</h3>
+          <h3 className="text-lg font-medium gradient-text mb-4">Security Settings</h3>
           <div className="space-y-4">
             {securitySettings.map((setting) => (
-              <div key={setting.id} className="flex items-center justify-between p-4 rounded-lg border border-gray-200 dark:border-gray-700">
-                <div>
-                  <h4 className="text-sm font-medium text-gray-900 dark:text-white">{setting.name}</h4>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">{setting.description}</p>
-                </div>
-                {setting.id === '2fa' ? (
-                  <div className="flex items-center">
-                    <button
-                      onClick={() => setIs2FAEnabled(!is2FAEnabled)}
-                      className={`relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-teal focus:ring-offset-2 ${
-                        is2FAEnabled ? 'bg-teal' : 'bg-gray-200 dark:bg-gray-700'
-                      }`}
-                    >
-                      <span
-                        className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out ${
-                          is2FAEnabled ? 'translate-x-5' : 'translate-x-0'
-                        }`}
-                      />
-                    </button>
+              <div key={setting.id} className="glass-effect rounded-xl p-4 hover-glow">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h4 className="text-sm font-medium text-white">{setting.name}</h4>
+                    <p className="text-sm text-blue-400">{setting.description}</p>
                   </div>
-                ) : (
-                  <Button variant="outline" size="sm">
-                    Manage
-                  </Button>
-                )}
+                  {setting.id === '2fa' ? (
+                    <div className="flex items-center">
+                      <button
+                        onClick={() => setIs2FAEnabled(!is2FAEnabled)}
+                        className={`relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-teal-500 ${
+                          is2FAEnabled ? 'bg-teal-400 glow' : 'bg-white/20'
+                        }`}
+                      >
+                        <span
+                          className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-300 ease-in-out ${
+                            is2FAEnabled ? 'translate-x-5' : 'translate-x-0'
+                          }`}
+                        />
+                      </button>
+                    </div>
+                  ) : (
+                    <Button 
+                      variant="outline" 
+                      size="sm"
+                      className="glass-effect hover:bg-white/10"
+                    >
+                      Manage
+                    </Button>
+                  )}
+                </div>
               </div>
             ))}
           </div>
@@ -147,44 +153,43 @@ export default function Settings() {
 
         {/* Notification Preferences */}
         <div>
-          <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4">Notification Preferences</h3>
+          <h3 className="text-lg font-medium gradient-text mb-4">Notification Preferences</h3>
           <div className="space-y-4">
             {notificationPreferences.map((pref) => (
               <label
                 key={pref.id}
-                className="relative flex items-start cursor-pointer p-4 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors duration-200"
+                className="relative flex items-start cursor-pointer glass-effect rounded-xl p-4 hover-glow transition-all duration-300"
               >
                 <div className="flex items-center h-5">
                   <input
                     type="checkbox"
                     checked={notifications.includes(pref.id)}
                     onChange={() => toggleNotification(pref.id)}
-                    className="h-4 w-4 text-teal focus:ring-teal border-gray-300 rounded"
+                    className="h-4 w-4 text-teal-400 focus:ring-teal-500 border-teal-400/50 rounded transition-all duration-300"
                   />
                 </div>
                 <div className="ml-3">
-                  <span className="text-sm font-medium text-gray-900 dark:text-white">{pref.name}</span>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">{pref.description}</p>
+                  <span className="text-sm font-medium text-white">{pref.name}</span>
+                  <p className="text-sm text-blue-400">{pref.description}</p>
                 </div>
               </label>
             ))}
           </div>
         </div>
 
-        {/* Remove Theme Preferences section completely */}
-
         {/* Save Button */}
         <div className="pt-4">
           <Button
             onClick={handleSave}
-            className="w-full bg-gradient-to-r from-teal-600 to-indigo-600"
+            className="w-full gradient-bg glow-strong hover:scale-105 transition-all duration-300 relative overflow-hidden group"
           >
-            Save Changes
+            <span className="relative z-10">Save Changes</span>
+            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-r from-teal-400 via-blue-500 to-purple-600"></div>
           </Button>
 
           {/* Success Message */}
           {showSaveSuccess && (
-            <div className="mt-4 p-4 rounded-lg bg-green-50 dark:bg-green-900/20 text-green-800 dark:text-green-200 text-center">
+            <div className="mt-4 p-4 glass-effect rounded-xl text-teal-400 text-center animate-fade-in glow">
               Settings saved successfully!
             </div>
           )}

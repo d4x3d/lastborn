@@ -69,9 +69,11 @@ export default function Markets() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-purple/5 to-teal/5 dark:from-purple/10 dark:to-teal/10 pt-24">
+      <div className="min-h-screen bg-gradient-to-b from-gray-900 via-blue-900 to-black pt-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center text-gray-600 dark:text-gray-400">Loading market data...</div>
+          <div className="glass-effect rounded-xl p-8 text-center">
+            <div className="text-white text-lg animate-pulse">Loading market data...</div>
+          </div>
         </div>
       </div>
     );
@@ -79,95 +81,113 @@ export default function Markets() {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-purple/5 to-teal/5 dark:from-purple/10 dark:to-teal/10 pt-24">
+      <div className="min-h-screen bg-gradient-to-b from-gray-900 via-blue-900 to-black pt-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center text-red-600 dark:text-red-400">{error}</div>
+          <div className="glass-effect rounded-xl p-8 text-center">
+            <div className="text-pink-500 text-lg">{error}</div>
+          </div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple/5 to-teal/5 dark:from-purple/10 dark:to-teal/10 pt-24">
+    <div className="min-h-screen bg-gradient-to-b from-gray-900 via-blue-900 to-black pt-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="sm:flex sm:items-center">
           <div className="sm:flex-auto">
-            <h1 className="text-3xl font-bold bg-gradient-to-r from-purple via-pink to-teal bg-clip-text text-transparent">Markets</h1>
-            <p className="mt-2 text-sm text-gray-700 dark:text-gray-300">
+            <h1 className="text-3xl font-bold gradient-text glow">Markets</h1>
+            <p className="mt-2 text-sm text-blue-400">
               Live cryptocurrency prices, market cap, and trading volume
             </p>
           </div>
           <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-            <input
-              type="text"
-              placeholder="Search markets..."
-              className="block w-full rounded-full border-0 px-4 py-2 text-gray-900 dark:text-white shadow-sm ring-1 ring-purple/20 dark:ring-purple/30 placeholder:text-gray-400 focus:ring-2 focus:ring-teal dark:bg-gray-800"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
+            <div className="relative">
+              <input
+                type="text"
+                placeholder="Search markets..."
+                className="block w-full rounded-full bg-white/10 border-0 text-white backdrop-blur-lg focus:ring-2 focus:ring-teal-500 transition-all duration-300 pl-10 pr-4 py-2"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+              <svg
+                className="absolute left-3 top-2.5 h-5 w-5 text-gray-400"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </div>
           </div>
         </div>
         <div className="mt-8 flow-root">
-          <div className="overflow-x-hidden">
+          <div className="overflow-x-auto">
             <div className="inline-block min-w-full align-middle">
-              <div className="overflow-hidden shadow ring-1 ring-purple/10 dark:ring-purple/20 rounded-lg">
-                <table className="min-w-full divide-y divide-purple/10 dark:divide-purple/20">
-                  <thead className="bg-purple/5 dark:bg-purple/10">
+              <div className="overflow-hidden glass-effect rounded-xl">
+                <table className="min-w-full divide-y divide-white/10">
+                  <thead className="backdrop-blur-lg">
                     <tr>
-                      <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-xs font-semibold text-gray-900 dark:text-white sm:pl-6">
+                      <th scope="col" className="py-4 pl-4 pr-3 text-left text-xs font-semibold text-white sm:pl-6">
                         Name
                       </th>
-                      <th scope="col" className="px-3 py-3.5 text-right text-xs font-semibold text-gray-900 dark:text-white">
+                      <th scope="col" className="px-3 py-4 text-right text-xs font-semibold text-white">
                         Price
                       </th>
-                      <th scope="col" className="px-3 py-3.5 text-right text-xs font-semibold text-gray-900 dark:text-white">
+                      <th scope="col" className="px-3 py-4 text-right text-xs font-semibold text-white">
                         24h
                       </th>
-                      <th scope="col" className="px-3 py-3.5 text-right text-xs font-semibold text-gray-900 dark:text-white">
+                      <th scope="col" className="px-3 py-4 text-right text-xs font-semibold text-white">
                         Cap
                       </th>
-                      <th scope="col" className="px-3 py-3.5 text-right text-xs font-semibold text-gray-900 dark:text-white">
+                      <th scope="col" className="px-3 py-4 text-right text-xs font-semibold text-white">
                         Volume
                       </th>
-                      <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
+                      <th scope="col" className="relative py-4 pl-3 pr-4 sm:pr-6">
                         <span className="sr-only">Trade</span>
                       </th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-purple/10 dark:divide-purple/20 bg-white dark:bg-gray-900">
+                  <tbody className="divide-y divide-white/10">
                     {filteredCoins.map((coin) => (
-                      <tr key={coin.id} className="hover:bg-purple/5 dark:hover:bg-purple/10 transition-colors duration-200">
-                        <td className="whitespace-nowrap py-2 pl-4 pr-3 text-xs sm:pl-6">
+                      <tr key={coin.id} className="hover:bg-white/5 transition-colors duration-200">
+                        <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm sm:pl-6">
                           <div className="flex items-center">
                             <img 
                               src={coin.image} 
                               alt={coin.name} 
-                              className="h-6 w-6 rounded-full"
+                              className="h-8 w-8 rounded-full glow"
                             />
-                            <div className="ml-2">
-                              <div className="font-medium text-gray-900 dark:text-white">{coin.name}</div>
-                              <div className="text-teal text-xs">{coin.symbol.toUpperCase()}</div>
+                            <div className="ml-3">
+                              <div className="font-medium text-white">{coin.name}</div>
+                              <div className="text-blue-400 text-xs">{coin.symbol.toUpperCase()}</div>
                             </div>
                           </div>
                         </td>
-                        <td className="whitespace-nowrap px-2 py-2 text-right text-xs text-gray-500 dark:text-gray-400">
+                        <td className="whitespace-nowrap px-3 py-4 text-right text-sm text-white">
                           ${coin.current_price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                         </td>
-                        <td className={`whitespace-nowrap px-2 py-2 text-right text-xs ${
-                          coin.price_change_percentage_24h >= 0 ? 'text-forest dark:text-forest-light' : 'text-pink dark:text-pink-light'
+                        <td className={`whitespace-nowrap px-3 py-4 text-right text-sm font-medium ${
+                          coin.price_change_percentage_24h >= 0 ? 'text-green-400' : 'text-red-400'
                         }`}>
                           {coin.price_change_percentage_24h > 0 ? '+' : ''}{coin.price_change_percentage_24h.toFixed(1)}%
                         </td>
-                        <td className="whitespace-nowrap px-2 py-2 text-right text-xs text-gray-500 dark:text-gray-400">
+                        <td className="whitespace-nowrap px-3 py-4 text-right text-sm text-white">
                           {formatMarketCap(coin.market_cap)}
                         </td>
-                        <td className="whitespace-nowrap px-2 py-2 text-right text-xs text-gray-500 dark:text-gray-400">
+                        <td className="whitespace-nowrap px-3 py-4 text-right text-sm text-white">
                           {formatVolume(coin.total_volume)}
                         </td>
-                        <td className="relative whitespace-nowrap py-2 pl-2 pr-4 text-right text-xs font-medium sm:pr-6">
+                        <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                           <Link to={`/trade/${coin.symbol.toLowerCase()}`}>
-                            <Button variant="gradient" size="sm" className="px-2 py-1 text-xs">
-                              Trade
+                            <Button 
+                              className="gradient-bg glow-strong hover:scale-105 transition-all duration-300 relative overflow-hidden group px-4 py-2"
+                            >
+                              <span className="relative z-10">Trade</span>
+                              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-r from-teal-400 via-blue-500 to-purple-600"></div>
                             </Button>
                           </Link>
                         </td>

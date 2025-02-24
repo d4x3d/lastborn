@@ -60,7 +60,7 @@ export function Footer() {
             <Link to="/" className="text-xl font-bold bg-gradient-to-r from-teal-400 to-indigo-500 bg-clip-text text-transparent">
               JayeCane
             </Link>
-            <p className="text-sm leading-6 text-gray-600 dark:text-gray-400">
+            <p className="text-sm leading-6 text-gray-600">
               Professional-grade cryptocurrency trading platform with advanced tools and bank-grade security.
             </p>
             <div className="flex space-x-6">
@@ -68,7 +68,7 @@ export function Footer() {
                 <a
                   key={item.name}
                   href={item.href}
-                  className="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors duration-200"
+                  className="text-gray-500 hover:text-gray-900 transition-colors duration-200"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -81,13 +81,13 @@ export function Footer() {
           <div className="mt-16 grid grid-cols-2 gap-8 xl:col-span-2 xl:mt-0">
             <div className="md:grid md:grid-cols-2 md:gap-8">
               <div>
-                <h3 className="text-sm font-semibold text-gray-900 dark:text-white">Company</h3>
+                <h3 className="text-sm font-semibold text-gray-900">Company</h3>
                 <ul role="list" className="mt-6 space-y-4">
                   {navigation.main.map((item) => (
                     <li key={item.name}>
                       <Link
                         to={item.href}
-                        className="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors duration-200"
+                        className="text-sm text-gray-600 hover:text-gray-900 transition-colors duration-200"
                       >
                         {item.name}
                       </Link>
@@ -96,13 +96,13 @@ export function Footer() {
                 </ul>
               </div>
               <div className="mt-10 md:mt-0">
-                <h3 className="text-sm font-semibold text-gray-900 dark:text-white">Support</h3>
+                <h3 className="text-sm font-semibold text-gray-900">Support</h3>
                 <ul role="list" className="mt-6 space-y-4">
                   {navigation.support.map((item) => (
                     <li key={item.name}>
                       <Link
                         to={item.href}
-                        className="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors duration-200"
+                        className="text-sm text-gray-600 hover:text-gray-900 transition-colors duration-200"
                       >
                         {item.name}
                       </Link>
@@ -113,13 +113,13 @@ export function Footer() {
             </div>
             <div className="md:grid md:grid-cols-2 md:gap-8">
               <div>
-                <h3 className="text-sm font-semibold text-gray-900 dark:text-white">Legal</h3>
+                <h3 className="text-sm font-semibold text-gray-900">Legal</h3>
                 <ul role="list" className="mt-6 space-y-4">
                   {navigation.legal.map((item) => (
                     <li key={item.name}>
                       <Link
                         to={item.href}
-                        className="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors duration-200"
+                        className="text-sm text-gray-600 hover:text-gray-900 transition-colors duration-200"
                       >
                         {item.name}
                       </Link>
@@ -130,8 +130,8 @@ export function Footer() {
             </div>
           </div>
         </div>
-        <div className="mt-16 border-t border-gray-900/10 dark:border-gray-100/10 pt-8 sm:mt-20 lg:mt-24">
-          <p className="text-xs leading-5 text-gray-500 dark:text-gray-400">
+        <div className="mt-16 border-t border-gray-900/10 pt-8 sm:mt-20 lg:mt-24">
+          <p className="text-xs leading-5 text-gray-500">
             &copy; {new Date().getFullYear()} JayeCane. All rights reserved.
           </p>
         </div>

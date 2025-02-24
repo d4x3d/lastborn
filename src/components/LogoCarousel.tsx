@@ -12,7 +12,7 @@ export default function LogoCarousel({ logos }: LogoCarouselProps) {
     if (!scrollContainer) return;
 
     const scrollWidth = scrollContainer.scrollWidth;
-    const clientWidth = scrollContainer.clientWidth;
+   
 
     let scrollPosition = 0;
     const scrollSpeed = 1; // Pixels per frame

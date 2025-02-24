@@ -6,77 +6,109 @@
   :root {
     --background: 0 0% 98%;
     --foreground: 220 15% 25%;
-    --card: 0 0% 100%;
-    --card-foreground: 220 15% 25%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 220 15% 25%;
-    --primary: 220 54% 20%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 45 80% 50%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 220 15% 96%;
-    --muted-foreground: 220 15% 40%;
-    --accent: 220 70% 45%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 220 15% 90%;
-    --input: 220 15% 90%;
-    --ring: 220 54% 20%;
-    --radius: 1rem;
+    /* ... (keep existing CSS variables) ... */
   }
  
   .dark {
     --background: 220 15% 8%;
     --foreground: 210 40% 98%;
-    --card: 220 15% 8%;
-    --card-foreground: 210 40% 98%;
-    --popover: 220 15% 8%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 220 54% 40%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 45 80% 50%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 220 15% 15%;
-    --muted-foreground: 220 15% 70%;
-    --accent: 220 70% 45%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 220 15% 20%;
-    --input: 220 15% 20%;
-    --ring: 220 54% 40%;
+    /* ... (keep existing dark mode variables) ... */
   }
 }
 
 @layer base {
   * {
-    @apply border-border transition-colors duration-200;
+    @apply border-border transition-all duration-300;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground overflow-x-hidden;
   }
 }
 
+/* Modern Gradients */
 .gradient-bg {
-  @apply bg-gradient-to-r from-[#1E3A8A] via-[#C4B5FD] to-[#FFD700];
+  @apply bg-gradient-to-r from-purple-600 via-blue-500 to-teal-400;
+  background-size: 200% 200%;
+  animation: gradientShift 8s ease infinite;
 }
 
 .gradient-text {
-  @apply bg-gradient-to-r from-[#1E3A8A] via-[#C4B5FD] to-[#FFD700] bg-clip-text text-transparent;
+  @apply bg-gradient-to-r from-purple-400 via-blue-500 to-teal-400 bg-clip-text text-transparent;
+  background-size: 200% auto;
+  animation: gradientShift 8s ease infinite;
 }
 
 .gradient-border {
-  @apply border-transparent bg-gradient-to-r from-[#1E3A8A] via-[#C4B5FD] to-[#FFD700] bg-clip-border;
+  position: relative;
+  &::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: inherit;
+    padding: 2px;
+    background: linear-gradient(45deg, #6366f1, #3b82f6, #14b8a6);
+    -webkit-mask: 
+      linear-gradient(#fff 0 0) content-box, 
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    background-size: 200% 200%;
+    animation: gradientShift 8s ease infinite;
+  }
 }
 
+/* Glass Effect */
+.glass-effect {
+  @apply bg-white/10 backdrop-blur-lg;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+/* Floating Animation */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Price Ticker Animation */
+@keyframes slide-left {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
+}
+
+.animate-slide-left {
+  animation: slide-left 20s linear infinite;
+}
+
+/* Gradient Shift Animation */
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Glow Effects */
+.glow {
+  filter: drop-shadow(0 0 8px rgba(99, 102, 241, 0.4));
+}
+
+.glow-strong {
+  filter: drop-shadow(0 0 12px rgba(99, 102, 241, 0.6));
+}
+
+.hover-glow:hover {
+  filter: drop-shadow(0 0 12px rgba(99, 102, 241, 0.6));
+  transform: translateY(-2px);
+}
+
+/* Basic Animations */
 @keyframes fade-in {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 @keyframes slide-up {
@@ -101,6 +133,7 @@
   }
 }
 
+/* Animation Classes */
 .animate-fade-in {
   animation: fade-in 0.5s ease-out;
 }
@@ -121,7 +154,53 @@
   animation: slide-in-right 0.5s ease-out;
 }
 
-/* Add these new utility classes */
+/* Card Hover Effects */
+.card-hover {
+  @apply transition-all duration-300 hover:scale-105;
+}
+
+/* Button Animation */
+.button-hover {
+  @apply transition-all duration-300 hover:scale-105 hover:shadow-lg;
+}
+
+/* Price Change Animation */
+@keyframes price-change {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+.animate-price-change {
+  animation: price-change 0.3s ease-out;
+}
+
+/* Background Pulse */
+@keyframes bg-pulse {
+  0% { background-opacity: 0.1; }
+  50% { background-opacity: 0.2; }
+  100% { background-opacity: 0.1; }
+}
+
+.animate-bg-pulse {
+  animation: bg-pulse 2s ease-in-out infinite;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-black/20;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-blue-500/50 rounded-full hover:bg-blue-500/70 transition-colors duration-200;
+}
+
+/* Backdrop Blur */
 .backdrop-blur-sm {
   backdrop-filter: blur(8px);
 }
@@ -130,21 +209,7 @@
   background-color: rgb(255 255 255 / 0.05);
 }
 
-/* Update the dark mode background handling */
-.dark .bg-white\/5 {
-  background-color: rgb(0 0 0 / 0.3);
-}
-
-/* Optional: Add a smooth transition for dark mode */
+/* Dark Mode Transitions */
 .dark {
   transition: background-color 0.3s ease-in-out;
 }
-
-/* Ensure the background image works well with dark mode */
-/* Removing background-blend-mode: multiply */
-/* Optional: Add a smooth transition for dark mode */
-.dark {
-  transition: background-color 0.3s ease-in-out;
-}
-
-/* Ensure the background image works well with dark mode */

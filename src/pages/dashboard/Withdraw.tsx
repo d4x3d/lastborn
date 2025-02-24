@@ -41,27 +41,27 @@ export default function Withdraw() {
   };
 
   return (
-    <div className="max-w-2xl mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 border border-purple/10 dark:border-purple/20">
+    <div className="max-w-2xl mx-auto glass-effect rounded-2xl p-8 animate-fade-in">
       {step === 1 && (
         <>
-          <div className="mb-6 p-4 bg-gradient-to-br from-purple/5 to-teal/5 dark:from-purple/10 dark:to-teal/10 rounded-lg">
-            <h3 className="text-sm font-medium text-gray-900 dark:text-white">Available Balance</h3>
-            <p className="text-2xl font-bold text-gray-900 dark:text-white">$98,750.00</p>
+          <div className="mb-8 glass-effect rounded-xl p-6 hover-glow">
+            <h3 className="text-sm font-medium text-blue-400">Available Balance</h3>
+            <p className="text-3xl font-bold gradient-text glow">$98,750.00</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label className="block text-sm font-medium text-white mb-2">
                 Select Withdrawal Method
               </label>
               <div className="grid grid-cols-1 gap-4">
                 {withdrawalMethods.map((method) => (
                   <label
                     key={method.id}
-                    className={`relative flex flex-col p-4 rounded-lg border cursor-pointer transition-all duration-200 ${
+                    className={`relative flex flex-col p-4 rounded-lg cursor-pointer transition-all duration-300 ${
                       selectedMethod === method.id
-                        ? 'border-teal bg-teal/5 dark:bg-teal/10'
-                        : 'border-gray-200 dark:border-gray-700 hover:border-teal/50'
+                        ? 'glass-effect gradient-border glow'
+                        : 'glass-effect hover:scale-[1.02] hover-glow'
                     }`}
                   >
                     <div className="flex items-center">
@@ -74,10 +74,10 @@ export default function Withdraw() {
                         className="h-4 w-4 text-teal focus:ring-teal border-gray-300"
                       />
                       <div className="ml-3">
-                        <span className="text-sm font-medium text-gray-900 dark:text-white flex items-center gap-2">
+                        <span className="text-base font-medium text-white flex items-center gap-2">
                           {method.icon} {method.name}
                         </span>
-                        <div className="mt-1 flex items-center gap-4 text-xs text-gray-500 dark:text-gray-400">
+                        <div className="mt-1 flex items-center gap-4 text-sm text-blue-400">
                           <span>Fee: {method.fee}</span>
                           <span>Processing: {method.processingTime}</span>
                         </div>
@@ -89,18 +89,18 @@ export default function Withdraw() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label className="block text-sm font-medium text-white mb-2">
                 Amount (USD)
               </label>
               <div className="mt-1 relative rounded-full shadow-sm">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <span className="text-gray-500 dark:text-gray-400 sm:text-sm">$</span>
+                  <span className="text-white/60 sm:text-sm">$</span>
                 </div>
                 <input
                   type="number"
                   value={amount}
                   onChange={(e) => setAmount(e.target.value)}
-                  className="block w-full pl-7 pr-12 rounded-full border-gray-300 dark:border-gray-700 focus:ring-teal focus:border-teal dark:bg-gray-900 dark:text-white sm:text-sm"
+                  className="block w-full pl-7 pr-12 rounded-full bg-white/10 border-0 text-white backdrop-blur-lg focus:ring-2 focus:ring-teal-500 transition-all duration-300 sm:text-sm"
                   placeholder="0.00"
                   min="10"
                   max="98750"
@@ -108,13 +108,17 @@ export default function Withdraw() {
                   required
                 />
                 <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                  <span className="text-gray-500 dark:text-gray-400 sm:text-sm">USD</span>
+                  <span className="text-white/60 sm:text-sm">USD</span>
                 </div>
               </div>
             </div>
 
-            <Button type="submit" className="w-full bg-gradient-to-r from-teal-600 to-indigo-600">
-              Continue to Withdraw
+            <Button 
+              type="submit" 
+              className="w-full gradient-bg glow-strong hover:scale-105 transition-all duration-300 relative overflow-hidden group"
+            >
+              <span className="relative z-10">Continue to Withdraw</span>
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-r from-teal-400 via-blue-500 to-purple-600"></div>
             </Button>
           </form>
         </>
@@ -122,22 +126,22 @@ export default function Withdraw() {
 
       {step === 2 && (
         <div className="text-center">
-          <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-6">Confirm Withdrawal</h2>
-          <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-6 mb-6">
+          <h2 className="text-2xl font-bold gradient-text glow mb-6">Confirm Withdrawal</h2>
+          <div className="glass-effect rounded-xl p-6 mb-6">
             <div className="space-y-4">
               <div>
-                <p className="text-sm text-gray-500 dark:text-gray-400">Amount</p>
-                <p className="text-2xl font-bold text-gray-900 dark:text-white">${amount} USD</p>
+                <p className="text-sm text-blue-400">Amount</p>
+                <p className="text-2xl font-bold gradient-text glow">${amount} USD</p>
               </div>
               <div>
-                <p className="text-sm text-gray-500 dark:text-gray-400">Withdrawal Method</p>
-                <p className="text-lg font-medium text-gray-900 dark:text-white">
+                <p className="text-sm text-blue-400">Withdrawal Method</p>
+                <p className="text-lg font-medium text-white">
                   {withdrawalMethods.find(m => m.id === selectedMethod)?.name}
                 </p>
               </div>
               <div>
-                <p className="text-sm text-gray-500 dark:text-gray-400">Fee</p>
-                <p className="text-lg font-medium text-gray-900 dark:text-white">
+                <p className="text-sm text-blue-400">Fee</p>
+                <p className="text-lg font-medium text-white">
                   {withdrawalMethods.find(m => m.id === selectedMethod)?.fee}
                 </p>
               </div>
@@ -146,16 +150,17 @@ export default function Withdraw() {
           <div className="flex gap-4">
             <Button
               variant="outline"
-              className="flex-1"
+              className="flex-1 glass-effect hover:bg-white/10"
               onClick={() => setStep(1)}
             >
               Back
             </Button>
             <Button
-              className="flex-1 bg-gradient-to-r from-teal-600 to-indigo-600"
+              className="flex-1 gradient-bg glow-strong hover:scale-105 transition-all duration-300 relative overflow-hidden group"
               onClick={confirmWithdrawal}
             >
-              Confirm Withdrawal
+              <span className="relative z-10">Confirm Withdrawal</span>
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-r from-teal-400 via-blue-500 to-purple-600"></div>
             </Button>
           </div>
         </div>
@@ -163,48 +168,50 @@ export default function Withdraw() {
 
       {step === 3 && (
         <div className="text-center">
-          <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100 dark:bg-green-900 mb-4">
-            <svg className="h-6 w-6 text-green-600 dark:text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <div className="mx-auto flex items-center justify-center h-16 w-16 rounded-full glass-effect glow mb-6">
+            <svg className="h-8 w-8 text-teal-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
           </div>
-          <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-2">Withdrawal Initiated</h2>
-          <p className="text-gray-500 dark:text-gray-400 mb-6">
+          <h2 className="text-2xl font-bold gradient-text glow mb-2">Withdrawal Initiated</h2>
+          <p className="text-blue-400 mb-6">
             Your withdrawal of ${amount} USD has been initiated. You will receive a confirmation email shortly.
           </p>
-          <Button
-            className="bg-gradient-to-r from-teal-600 to-indigo-600"
+          <Button 
+            className="gradient-bg glow-strong hover:scale-105 transition-all duration-300 relative overflow-hidden group"
             onClick={() => setStep(1)}
           >
-            Make Another Withdrawal
+            <span className="relative z-10">Make Another Withdrawal</span>
+            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-r from-teal-400 via-blue-500 to-purple-600"></div>
           </Button>
         </div>
       )}
 
       {step === 4 && (
         <div className="text-center">
-          <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-yellow-100 dark:bg-yellow-900 mb-4">
-            <svg className="h-6 w-6 text-yellow-600 dark:text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <div className="mx-auto flex items-center justify-center h-16 w-16 rounded-full glass-effect glow mb-6">
+            <svg className="h-8 w-8 text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
             </svg>
           </div>
-          <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-2">Wallet Required</h2>
-          <p className="text-gray-500 dark:text-gray-400 mb-6">
+          <h2 className="text-2xl font-bold gradient-text glow mb-2">Wallet Required</h2>
+          <p className="text-blue-400 mb-6">
             To make a crypto withdrawal, you need to link your wallet first. Please go to settings to add your wallet address.
           </p>
           <div className="flex gap-4">
             <Button
               variant="outline"
-              className="flex-1"
+              className="flex-1 glass-effect hover:bg-white/10"
               onClick={() => setStep(1)}
             >
               Back
             </Button>
             <Button
-              className="flex-1 bg-gradient-to-r from-teal-600 to-indigo-600"
+              className="flex-1 gradient-bg glow-strong hover:scale-105 transition-all duration-300 relative overflow-hidden group"
               onClick={goToWalletSettings}
             >
-              Link Wallet
+              <span className="relative z-10">Link Wallet</span>
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-r from-teal-400 via-blue-500 to-purple-600"></div>
             </Button>
           </div>
         </div>
