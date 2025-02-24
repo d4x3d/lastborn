@@ -18,6 +18,7 @@ interface Market {
 export default function Markets() {
   const [markets, setMarkets] = useState<Market[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [sortConfig, setSortConfig] = useState<{ key: keyof Market; direction: 'asc' | 'desc' }>({
     key: 'market_cap',
@@ -27,13 +28,25 @@ export default function Markets() {
   useEffect(() => {
     const fetchMarkets = async () => {
       try {
+        setIsLoading(true);
+        setError(null);
         const response = await axios.get(
-          'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&sparkline=false'
+          'https://api.coingecko.com/api/v3/coins/markets',
+          {
+            params: {
+              vs_currency: 'usd',
+              order: 'market_cap_desc',
+              per_page: 100,
+              sparkline: false,
+              locale: 'en'
+            }
+          }
         );
         setMarkets(response.data);
         setIsLoading(false);
       } catch (error) {
         console.error('Error fetching markets:', error);
+        setError('Failed to load market data. Please try again later.');
         setIsLoading(false);
       }
     };
@@ -68,11 +81,31 @@ export default function Markets() {
     </span>
   );
 
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-gray-900 via-blue-900 to-black pt-[calc(64px+2rem)] pb-12">
+        <div className="container mx-auto px-4 text-center">
+          <div className="glass-effect rounded-2xl p-8">
+            <HeroIcons.ExclamationTriangleIcon className="h-12 w-12 text-yellow-400 mx-auto mb-4" />
+            <h2 className="text-xl font-bold text-white mb-2">Error Loading Markets</h2>
+            <p className="text-white/60 mb-4">{error}</p>
+            <button
+              onClick={() => window.location.reload()}
+              className="px-4 py-2 bg-blue-500/20 hover:bg-blue-500/30 text-blue-400 rounded-full transition-colors duration-200"
+            >
+              Try Again
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 via-blue-900 to-black">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-16 pb-24">
+    <div className="min-h-screen bg-gradient-to-b from-gray-900 via-blue-900 to-black pt-[calc(64px+2rem)] pb-12">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Search and Filters */}
-        <div className="sticky top-16 z-10 bg-black/50 backdrop-blur-md p-4 rounded-xl mb-6">
+        <div className="sticky top-20 z-10 bg-black/50 backdrop-blur-md p-4 rounded-xl mb-6">
           <div className="flex flex-col sm:flex-row gap-4 items-center">
             <div className="relative flex-1 w-full">
               <HeroIcons.MagnifyingGlassIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-white/40" />
@@ -88,80 +121,84 @@ export default function Markets() {
         </div>
 
         {/* Markets Table */}
-        <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-white/10">
-            <thead>
-              <tr className="text-white/60 text-sm">
-                <th className="py-3 px-4 text-left">Asset</th>
-                <th className="py-3 px-4 text-right cursor-pointer" onClick={() => handleSort('current_price')}>
-                  Price
-                  <SortIcon active={sortConfig.key === 'current_price'} direction={sortConfig.direction} />
-                </th>
-                <th className="py-3 px-4 text-right cursor-pointer" onClick={() => handleSort('price_change_percentage_24h')}>
-                  24h Change
-                  <SortIcon active={sortConfig.key === 'price_change_percentage_24h'} direction={sortConfig.direction} />
-                </th>
-                <th className="py-3 px-4 text-right cursor-pointer hidden sm:table-cell" onClick={() => handleSort('market_cap')}>
-                  Market Cap
-                  <SortIcon active={sortConfig.key === 'market_cap'} direction={sortConfig.direction} />
-                </th>
-                <th className="py-3 px-4 text-right hidden lg:table-cell cursor-pointer" onClick={() => handleSort('total_volume')}>
-                  Volume (24h)
-                  <SortIcon active={sortConfig.key === 'total_volume'} direction={sortConfig.direction} />
-                </th>
-                <th className="py-3 px-4 text-right hidden xl:table-cell">Supply</th>
-                <th className="py-3 px-4 text-right">Trade</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-white/10">
-              {isLoading ? (
-                <tr>
-                  <td colSpan={7} className="text-center py-8">
-                    <div className="animate-pulse text-white/60">Loading markets...</div>
-                  </td>
+        <div className="glass-effect rounded-2xl p-6">
+          <div className="overflow-x-auto">
+            <table className="min-w-full divide-y divide-white/10">
+              <thead>
+                <tr className="text-white/60 text-sm">
+                  <th className="py-3 px-4 text-left">Asset</th>
+                  <th className="py-3 px-4 text-right cursor-pointer" onClick={() => handleSort('current_price')}>
+                    Price
+                    <SortIcon active={sortConfig.key === 'current_price'} direction={sortConfig.direction} />
+                  </th>
+                  <th className="py-3 px-4 text-right cursor-pointer" onClick={() => handleSort('price_change_percentage_24h')}>
+                    24h Change
+                    <SortIcon active={sortConfig.key === 'price_change_percentage_24h'} direction={sortConfig.direction} />
+                  </th>
+                  <th className="py-3 px-4 text-right cursor-pointer hidden sm:table-cell" onClick={() => handleSort('market_cap')}>
+                    Market Cap
+                    <SortIcon active={sortConfig.key === 'market_cap'} direction={sortConfig.direction} />
+                  </th>
+                  <th className="py-3 px-4 text-right hidden lg:table-cell cursor-pointer" onClick={() => handleSort('total_volume')}>
+                    Volume (24h)
+                    <SortIcon active={sortConfig.key === 'total_volume'} direction={sortConfig.direction} />
+                  </th>
+                  <th className="py-3 px-4 text-right hidden xl:table-cell">Supply</th>
+                  <th className="py-3 px-4 text-right">Trade</th>
                 </tr>
-              ) : filteredMarkets.map((market) => (
-                <tr 
-                  key={market.id} 
-                  className="hover:bg-white/5 transition-colors duration-200"
-                >
-                  <td className="py-4 px-4">
-                    <div className="flex items-center gap-3">
-                      <img src={market.image} alt={market.name} className="h-8 w-8" />
-                      <div>
-                        <div className="text-white font-medium">{market.name}</div>
-                        <div className="text-white/60 text-sm">{market.symbol.toUpperCase()}</div>
+              </thead>
+              <tbody className="divide-y divide-white/10">
+                {isLoading ? (
+                  Array.from({ length: 10 }).map((_, index) => (
+                    <tr key={index} className="animate-pulse">
+                      <td colSpan={7} className="py-4">
+                        <div className="h-12 bg-white/5 rounded"></div>
+                      </td>
+                    </tr>
+                  ))
+                ) : filteredMarkets.map((market) => (
+                  <tr 
+                    key={market.id} 
+                    className="hover:bg-white/5 transition-colors duration-200"
+                  >
+                    <td className="py-4 px-4">
+                      <div className="flex items-center gap-3">
+                        <img src={market.image} alt={market.name} className="h-8 w-8" />
+                        <div>
+                          <div className="text-white font-medium">{market.name}</div>
+                          <div className="text-white/60 text-sm">{market.symbol.toUpperCase()}</div>
+                        </div>
                       </div>
-                    </div>
-                  </td>
-                  <td className="py-4 px-4 text-right text-white">
-                    ${market.current_price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                  </td>
-                  <td className="py-4 px-4 text-right">
-                    <span className={market.price_change_percentage_24h >= 0 ? 'text-green-400' : 'text-red-400'}>
-                      {market.price_change_percentage_24h.toFixed(2)}%
-                    </span>
-                  </td>
-                  <td className="py-4 px-4 text-right text-white/60 hidden sm:table-cell">
-                    ${market.market_cap.toLocaleString()}
-                  </td>
-                  <td className="py-4 px-4 text-right text-white/60 hidden lg:table-cell">
-                    ${market.total_volume.toLocaleString()}
-                  </td>
-                  <td className="py-4 px-4 text-right text-white/60 hidden xl:table-cell">
-                    {market.circulating_supply.toLocaleString()} {market.symbol.toUpperCase()}
-                  </td>
-                  <td className="py-4 px-4 text-right">
-                    <Link to={`/trade?symbol=${market.symbol.toUpperCase()}`}>
-                      <button className="px-4 py-1 bg-blue-500/20 hover:bg-blue-500/30 text-blue-400 rounded-full transition-colors duration-200">
-                        Trade
-                      </button>
-                    </Link>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+                    </td>
+                    <td className="py-4 px-4 text-right text-white">
+                      ${market.current_price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                    </td>
+                    <td className="py-4 px-4 text-right">
+                      <span className={market.price_change_percentage_24h >= 0 ? 'text-green-400' : 'text-red-400'}>
+                        {market.price_change_percentage_24h.toFixed(2)}%
+                      </span>
+                    </td>
+                    <td className="py-4 px-4 text-right text-white/60 hidden sm:table-cell">
+                      ${market.market_cap.toLocaleString()}
+                    </td>
+                    <td className="py-4 px-4 text-right text-white/60 hidden lg:table-cell">
+                      ${market.total_volume.toLocaleString()}
+                    </td>
+                    <td className="py-4 px-4 text-right text-white/60 hidden xl:table-cell">
+                      {market.circulating_supply.toLocaleString()} {market.symbol.toUpperCase()}
+                    </td>
+                    <td className="py-4 px-4 text-right">
+                      <Link to={`/trade?symbol=${market.symbol.toUpperCase()}`}>
+                        <button className="px-4 py-1 bg-blue-500/20 hover:bg-blue-500/30 text-blue-400 rounded-full transition-colors duration-200">
+                          Trade
+                        </button>
+                      </Link>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
