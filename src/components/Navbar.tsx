@@ -35,7 +35,7 @@ export function Navbar() {
               <div className="flex lg:flex-1">
                 <Link to="/" className="-m-1.5 p-1.5 flex items-center gap-2">
                   <img src="/images/icon.png" alt="Logo" className="h-8 w-8" />
-                  <span className="text-xl font-bold gradient-text glow">
+                  <span className="text-xl font-bold gradient-text ">
                     JayeCane
                   </span>
                 </Link>
@@ -61,7 +61,7 @@ export function Navbar() {
                       to={item.href}
                       className={`relative px-4 py-2 text-sm font-semibold transition-all duration-300 rounded-full flex items-center gap-2 ${
                         isActive 
-                          ? 'text-white glass-effect glow'
+                          ? 'text-white glass-effect '
                           : 'text-white/80 hover:text-white hover:bg-white/5'
                       }`}
                     >
@@ -88,7 +88,7 @@ export function Navbar() {
                 <Link to="/signup">
                   <Button 
                     size="sm"
-                    className="gradient-bg glow-strong hover:scale-105 transition-all duration-300 relative overflow-hidden group px-6"
+                    className="gradient-bg -strong hover:scale-105 transition-all duration-300 relative overflow-hidden group px-6"
                   >
                     <span className="relative z-10">Sign up</span>
                     <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-r from-teal-400 via-blue-500 to-purple-600"></div>
@@ -114,7 +114,7 @@ export function Navbar() {
           <div className="flex items-center justify-between p-6">
             <Link to="/" className="-m-1.5 p-1.5 flex items-center gap-2" onClick={() => setMobileMenuOpen(false)}>
               <img src="/images/icon.png" alt="Logo" className="h-8 w-8" />
-              <span className="text-xl font-bold gradient-text glow">
+              <span className="text-xl font-bold gradient-text ">
                 JayeCane
               </span>
             </Link>
@@ -137,7 +137,7 @@ export function Navbar() {
                     to={item.href}
                     className={`-mx-3 flex items-center gap-2 rounded-full px-4 py-3 text-base font-semibold transition-colors duration-300 ${
                       isActive
-                        ? 'glass-effect glow text-white'
+                        ? 'glass-effect  text-white'
                         : 'text-white/80 hover:bg-white/5 hover:text-white'
                     }`}
                     onClick={() => setMobileMenuOpen(false)}
@@ -166,7 +166,7 @@ export function Navbar() {
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   <Button 
-                    className="w-full justify-center gradient-bg glow-strong hover:scale-105 transition-all duration-300 relative overflow-hidden group"
+                    className="w-full justify-center gradient-bg -strong hover:scale-105 transition-all duration-300 relative overflow-hidden group"
                   >
                     <span className="relative z-10">Sign up</span>
                     <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-r from-teal-400 via-blue-500 to-purple-600"></div>

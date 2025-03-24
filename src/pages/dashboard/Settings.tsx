@@ -38,15 +38,15 @@ export default function Settings() {
 
   return (
     <div className="max-w-2xl mx-auto glass-effect rounded-2xl p-8 animate-fade-in">
-      <h2 className="text-2xl font-bold gradient-text glow mb-8">Account Settings</h2>
+      <h2 className="text-2xl font-bold gradient-text  mb-8">Account Settings</h2>
 
       <div className="space-y-8">
         {/* Wallet Section */}
         <div>
           <h3 className="text-lg font-medium gradient-text mb-4">Wallet Settings</h3>
-          <div className="glass-effect rounded-xl p-6 hover-glow">
+          <div className="glass-effect rounded-xl p-6 hover-">
             <div className="flex items-center gap-3 mb-4">
-              <WalletIcon className="h-6 w-6 text-teal-400 glow" />
+              <WalletIcon className="h-6 w-6 text-teal-400 " />
               <h4 className="text-base font-medium gradient-text">
                 {isWalletLinked ? 'Linked Wallet' : 'Link Your Wallet'}
               </h4>
@@ -70,7 +70,7 @@ export default function Settings() {
                 />
               </div>
               {isWalletLinked && (
-                <div className="glass-effect rounded-lg p-3 text-sm text-teal-400 glow">
+                <div className="glass-effect rounded-lg p-3 text-sm text-teal-400 ">
                   ✓ Wallet successfully linked
                 </div>
               )}
@@ -115,7 +115,7 @@ export default function Settings() {
           <h3 className="text-lg font-medium gradient-text mb-4">Security Settings</h3>
           <div className="space-y-4">
             {securitySettings.map((setting) => (
-              <div key={setting.id} className="glass-effect rounded-xl p-4 hover-glow">
+              <div key={setting.id} className="glass-effect rounded-xl p-4 hover-">
                 <div className="flex items-center justify-between">
                   <div>
                     <h4 className="text-sm font-medium text-white">{setting.name}</h4>
@@ -126,7 +126,7 @@ export default function Settings() {
                       <button
                         onClick={() => setIs2FAEnabled(!is2FAEnabled)}
                         className={`relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-teal-500 ${
-                          is2FAEnabled ? 'bg-teal-400 glow' : 'bg-white/20'
+                          is2FAEnabled ? 'bg-teal-400 ' : 'bg-white/20'
                         }`}
                       >
                         <span
@@ -158,7 +158,7 @@ export default function Settings() {
             {notificationPreferences.map((pref) => (
               <label
                 key={pref.id}
-                className="relative flex items-start cursor-pointer glass-effect rounded-xl p-4 hover-glow transition-all duration-300"
+                className="relative flex items-start cursor-pointer glass-effect rounded-xl p-4 hover- transition-all duration-300"
               >
                 <div className="flex items-center h-5">
                   <input
@@ -181,7 +181,7 @@ export default function Settings() {
         <div className="pt-4">
           <Button
             onClick={handleSave}
-            className="w-full gradient-bg glow-strong hover:scale-105 transition-all duration-300 relative overflow-hidden group"
+            className="w-full gradient-bg -strong hover:scale-105 transition-all duration-300 relative overflow-hidden group"
           >
             <span className="relative z-10">Save Changes</span>
             <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-r from-teal-400 via-blue-500 to-purple-600"></div>
@@ -189,7 +189,7 @@ export default function Settings() {
 
           {/* Success Message */}
           {showSaveSuccess && (
-            <div className="mt-4 p-4 glass-effect rounded-xl text-teal-400 text-center animate-fade-in glow">
+            <div className="mt-4 p-4 glass-effect rounded-xl text-teal-400 text-center animate-fade-in ">
               Settings saved successfully!
             </div>
           )}

@@ -50,12 +50,12 @@ export default function Dashboard() {
         <div className="glass-effect rounded-2xl p-8 mb-8">
           <h2 className="text-lg text-white/60">Total Balance</h2>
           <div className="flex items-end gap-2 mt-2">
-            <span className="text-4xl font-bold gradient-text glow">$</span>
-            <span className="text-5xl font-bold gradient-text glow">{balance}</span>
+            <span className="text-4xl font-bold gradient-text ">$</span>
+            <span className="text-5xl font-bold gradient-text ">{balance}</span>
           </div>
           <div className="mt-6 flex gap-4">
             <Link to="/dashboard/deposit">
-              <Button className="gradient-bg glow-strong hover:scale-105 transition-all duration-300">
+              <Button className="gradient-bg -strong hover:scale-105 transition-all duration-300">
                 Deposit
               </Button>
             </Link>
@@ -75,11 +75,11 @@ export default function Dashboard() {
               <Link
                 key={action.name}
                 to={action.href}
-                className="glass-effect rounded-xl p-6 hover-glow relative overflow-hidden group"
+                className="glass-effect rounded-xl p-6 hover- relative overflow-hidden group"
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-blue-400/10 via-purple-400/10 to-pink-400/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 <div className="relative z-10">
-                  <Icon className="h-8 w-8 text-blue-400 glow mb-4" />
+                  <Icon className="h-8 w-8 text-blue-400  mb-4" />
                   <h3 className="text-lg font-semibold text-white">{action.name}</h3>
                 </div>
               </Link>

@@ -22,7 +22,7 @@ export default function Trade() {
           {/* Chart section */}
           <div className="lg:col-span-8">
             <div className="glass-effect rounded-xl p-6 h-[500px]">
-              <h2 className="text-lg font-bold gradient-text glow mb-4">
+              <h2 className="text-lg font-bold gradient-text  mb-4">
                 {symbol.toUpperCase()}/USD Chart
               </h2>
               {/* Add TradingView chart component here */}
@@ -37,7 +37,7 @@ export default function Trade() {
                 <Button
                   className={`flex-1 relative overflow-hidden group transition-all duration-300 ${
                     side === 'buy' 
-                      ? 'gradient-bg glow-strong' 
+                      ? 'gradient-bg -strong' 
                       : 'glass-effect hover:bg-white/10'
                   }`}
                   onClick={() => setSide('buy')}
@@ -50,7 +50,7 @@ export default function Trade() {
                 <Button
                   className={`flex-1 relative overflow-hidden group transition-all duration-300 ${
                     side === 'sell' 
-                      ? 'gradient-bg glow-strong' 
+                      ? 'gradient-bg -strong' 
                       : 'glass-effect hover:bg-white/10'
                   }`}
                   onClick={() => setSide('sell')}
@@ -66,7 +66,7 @@ export default function Trade() {
                 <Button
                   className={`flex-1 ${
                     orderType === 'limit' 
-                      ? 'gradient-bg glow-strong' 
+                      ? 'gradient-bg -strong' 
                       : 'glass-effect hover:bg-white/10'
                   }`}
                   onClick={() => setOrderType('limit')}
@@ -76,7 +76,7 @@ export default function Trade() {
                 <Button
                   className={`flex-1 ${
                     orderType === 'market' 
-                      ? 'gradient-bg glow-strong' 
+                      ? 'gradient-bg -strong' 
                       : 'glass-effect hover:bg-white/10'
                   }`}
                   onClick={() => setOrderType('market')}
@@ -118,7 +118,7 @@ export default function Trade() {
 
                 <Button
                   type="submit"
-                  className={`w-full gradient-bg glow-strong hover:scale-105 transition-all duration-300 relative overflow-hidden group ${
+                  className={`w-full gradient-bg -strong hover:scale-105 transition-all duration-300 relative overflow-hidden group ${
                     side === 'buy'
                       ? 'from-green-400 via-teal-500 to-blue-600'
                       : 'from-red-400 via-pink-500 to-purple-600'
@@ -134,7 +134,7 @@ export default function Trade() {
 
             {/* Order book */}
             <div className="mt-8 glass-effect rounded-xl p-6">
-              <h3 className="text-lg font-bold gradient-text glow mb-4">
+              <h3 className="text-lg font-bold gradient-text  mb-4">
                 Order Book
               </h3>
               <div className="space-y-2">

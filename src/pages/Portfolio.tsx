@@ -18,7 +18,7 @@ export default function Portfolio() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="sm:flex sm:items-center sm:justify-between">
           <div>
-            <h1 className="text-3xl font-bold gradient-text glow">Portfolio</h1>
+            <h1 className="text-3xl font-bold gradient-text ">Portfolio</h1>
             <p className="mt-2 text-sm text-blue-400">
               Total Value: ${totalValue.toLocaleString()}
             </p>
@@ -30,7 +30,7 @@ export default function Portfolio() {
                   key={period}
                   className={`transition-all duration-300 ${
                     timeframe === period 
-                      ? 'gradient-bg glow-strong' 
+                      ? 'gradient-bg -strong' 
                       : 'glass-effect hover:bg-white/10'
                   }`}
                   onClick={() => setTimeframe(period)}
@@ -45,21 +45,21 @@ export default function Portfolio() {
         <div className="mt-8">
           <div className="glass-effect rounded-xl overflow-hidden animate-fade-in">
             <div className="p-6">
-              <h2 className="text-lg font-bold gradient-text glow mb-4">
+              <h2 className="text-lg font-bold gradient-text  mb-4">
                 Performance
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="glass-effect rounded-xl p-6 hover-glow">
+                <div className="glass-effect rounded-xl p-6 hover-">
                   <p className="text-sm text-blue-400">Total Profit/Loss</p>
-                  <p className={`text-2xl font-bold gradient-text glow ${
+                  <p className={`text-2xl font-bold gradient-text  ${
                     totalProfit >= 0 ? 'from-green-400 to-teal-500' : 'from-red-400 to-pink-500'
                   }`}>
                     {totalProfit >= 0 ? '+' : ''}{totalProfit.toLocaleString()} USD
                   </p>
                 </div>
-                <div className="glass-effect rounded-xl p-6 hover-glow">
+                <div className="glass-effect rounded-xl p-6 hover-">
                   <p className="text-sm text-blue-400">Portfolio Value</p>
-                  <p className="text-2xl font-bold gradient-text glow">
+                  <p className="text-2xl font-bold gradient-text ">
                     ${totalValue.toLocaleString()}
                   </p>
                 </div>
@@ -67,7 +67,7 @@ export default function Portfolio() {
             </div>
 
             <div className="px-6 py-4">
-              <h3 className="text-lg font-bold gradient-text glow mb-4">
+              <h3 className="text-lg font-bold gradient-text  mb-4">
                 Assets
               </h3>
               <div className="overflow-x-auto">
@@ -99,7 +99,7 @@ export default function Portfolio() {
                             <img 
                               src={`/images/${asset.symbol.toLowerCase()}.svg`}
                               alt={asset.asset}
-                              className="h-8 w-8 rounded-full glow mr-3"
+                              className="h-8 w-8 rounded-full  mr-3"
                             />
                             <div>
                               <div className="text-sm font-medium text-white">

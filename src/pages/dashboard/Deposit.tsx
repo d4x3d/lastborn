@@ -23,7 +23,7 @@ export default function Deposit() {
     <div className="min-h-screen bg-gradient-to-b from-gray-900 via-blue-900 to-black pt-[calc(64px+2rem)] pb-12">
       <div className="container max-w-2xl mx-auto px-4">
         <div className="glass-effect rounded-2xl p-8">
-          <h1 className="text-3xl font-bold gradient-text glow mb-8">Deposit Funds</h1>
+          <h1 className="text-3xl font-bold gradient-text  mb-8">Deposit Funds</h1>
           
           {/* Crypto Selection */}
           <div className="space-y-6 mb-8">
@@ -35,7 +35,7 @@ export default function Deposit() {
                   onClick={() => setSelectedCrypto(crypto)}
                   className={`flex items-center gap-3 p-4 rounded-xl transition-all duration-300 ${
                     selectedCrypto.id === crypto.id
-                      ? 'glass-effect glow'
+                      ? 'glass-effect '
                       : 'bg-white/5 hover:bg-white/10'
                   }`}
                 >
