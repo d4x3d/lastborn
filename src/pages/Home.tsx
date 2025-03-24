@@ -1,31 +1,8 @@
-import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import * as HeroIcons from '@heroicons/react/24/outline';
-import axios from 'axios';
-
-interface CryptoPrice {
-  id: string;
-  symbol: string;
-  name: string;
-  current_price: number;
-  price_change_percentage_24h: number;
-  image: string;
-}
-
-// Extended list of crypto coins to track
-const coinIds = [
-  'bitcoin',
-  'ethereum',
-  'solana',
-  'binancecoin',
-  'cardano',
-  'ripple',
-  'polkadot',
-  'dogecoin',
-  'avalanche-2',
-  'chainlink'
-].join(',');
+import TradingViewWidget from '@/components/TradingViewWidget';
+import TradingViewChart from '@/components/TradingViewChart';
 
 const features = [
   {
@@ -111,28 +88,6 @@ const testimonials = [
 ];
 
 export default function Home() {
-  const [cryptoPrices, setCryptoPrices] = useState<CryptoPrice[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchPrices = async () => {
-      try {
-        const response = await axios.get(
-          `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${coinIds}&order=market_cap_desc&sparkline=false`
-        );
-        setCryptoPrices(response.data);
-        setIsLoading(false);
-      } catch (error) {
-        console.error('Error fetching crypto prices:', error);
-        setIsLoading(false);
-      }
-    };
-
-    fetchPrices();
-    const interval = setInterval(fetchPrices, 30000); // Update every 30 seconds
-    return () => clearInterval(interval);
-  }, []);
-
   return (
     <div className="relative min-h-screen bg-gradient-to-b from-gray-900 via-blue-900 to-black">
       {/* Background Image with Overlay */}
@@ -147,63 +102,11 @@ export default function Home() {
         }}
       />
       
-      {/* Floating Crypto Icons */}
-      <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none">
-        {cryptoPrices.slice(0, 3).map((coin, index) => (
-          <img
-            key={coin.id}
-            src={coin.image}
-            alt={coin.name}
-            className="absolute animate-float opacity-20"
-            style={{
-              width: '80px',
-              height: '80px',
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${index * 2}s`,
-            }}
-          />
-        ))}
-      </div>
-
       {/* Gradient Overlay */}
       <div className="fixed inset-0 z-0 bg-gradient-to-b from-transparent via-black/30 to-black/50" />
 
       {/* Content */}
       <div className="relative z-10">
-        {/* Live Price Ticker */}
-        <div className="w-full overflow-hidden bg-black/50 backdrop-blur-md border-b border-white/10">
-          <div className="max-w-7xl mx-auto px-4">
-            <div className="flex items-center gap-8 py-1.5 overflow-x-auto whitespace-nowrap scrollbar-hide">
-              {isLoading ? (
-                <div className="flex items-center justify-center w-full py-2">
-                  <div className="animate-pulse text-white/60">Loading prices...</div>
-                </div>
-              ) : (
-                cryptoPrices.map((coin) => (
-                  <div 
-                    key={coin.id}
-                    className="flex items-center space-x-2 transition-all duration-300 hover:bg-white/5 px-3 py-1 rounded-full"
-                  >
-                    <img 
-                      src={coin.image}
-                      alt={coin.name}
-                      className="h-6 w-6"
-                    />
-                    <div className="flex items-center gap-2">
-                      <span className="text-white font-medium">{coin.symbol.toUpperCase()}</span>
-                      <span className="text-white/60">${coin.current_price.toLocaleString()}</span>
-                      <span className={coin.price_change_percentage_24h >= 0 ? 'text-green-400' : 'text-red-400'}>
-                        {coin.price_change_percentage_24h.toFixed(2)}%
-                      </span>
-                    </div>
-                  </div>
-                ))
-              )}
-            </div>
-          </div>
-        </div>
-
         {/* Hero section */}
         <div className="relative overflow-hidden">
           <div className="mx-auto max-w-7xl px-6 py-16 sm:py-24 lg:flex items-center">
@@ -242,12 +145,8 @@ export default function Home() {
               </div>
             </div>
             <div className="mt-8 lg:mt-0 lg:ml-auto lg:w-1/2 relative">
-              <div className="glass-effect rounded-2xl p-1 animate-float">
-                <img 
-                  src="/images/bitcoin-btc-logo.svg"
-                  alt="Trading Interface"
-                  className="w-full h-auto rounded-xl glow-strong"
-                />
+              <div className="glass-effect rounded-2xl p-1" style={{ height: "500px" }}>
+                <TradingViewChart />
               </div>
             </div>
           </div>
