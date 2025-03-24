@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import * as HeroIcons from '@heroicons/react/24/outline';
-import TradingViewWidget from '@/components/TradingViewWidget';
 import TradingViewChart from '@/components/TradingViewChart';
 
 const features = [

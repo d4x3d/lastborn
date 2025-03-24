@@ -1,7 +1,7 @@
-import React, { useEffect, useRef, memo } from 'react';
+import { useEffect, useRef, memo } from 'react';
 
 function TradingViewChart() {
-  const container = useRef();
+  const container = useRef<HTMLDivElement>(null);
 
   useEffect(
     () => {
@@ -25,7 +25,9 @@ function TradingViewChart() {
           "hide_volume": true,
           "support_host": "https://www.tradingview.com"
         }`;
-      container.current.appendChild(script);
+      if (container.current) {
+        container.current.appendChild(script);
+      }
     },
     []
   );
